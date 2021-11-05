@@ -1,0 +1,4 @@
+insert into category (code,name) value('general','Chung')
+insert into category (code,name) value('technology','Công nghệ')
+insert into category (code,name) value('language','Ngoại ngữ')
+insert into category (code,name) value('economy','Kinh tế')
