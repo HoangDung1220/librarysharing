@@ -38,6 +38,12 @@ public class UserEntity {
 	
 	@OneToMany(mappedBy="user")
 	private List<DocumentEntity> documents = new ArrayList<DocumentEntity>();
+	
+	
+
+	public UserEntity() {
+		super();
+	}
 
 	public UserEntity(Long id, String fullname, String gmail ,String nameRoom, String username, String password, boolean status) {
 		super();

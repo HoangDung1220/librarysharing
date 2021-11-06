@@ -10,6 +10,12 @@ public class UserDTO {
 	private String password;
 	private boolean status;
 	
+	
+	
+	public UserDTO() {
+		super();
+	}
+
 	public UserDTO(Long id, String fullname, String gmail, String nameRoom, String username, String password,
 			boolean status) {
 		super();

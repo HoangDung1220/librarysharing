@@ -33,12 +33,11 @@ public class GeneralController extends BaseController{
 	@GetMapping("/general-home")
 	public ModelAndView getHomePage() {
 		model.setViewName("/publicpage");
-		
+		System.out.println("TRang general: "+SystemConstant.socket_client);
 		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
 		DocumentDTO document = new DocumentDTO();
 		model.addObject("document",document);
 		Thread t = new Thread() {
-
 			@Override
 			public void run() {
 				service.findAll();
@@ -68,7 +67,9 @@ public class GeneralController extends BaseController{
 			e.printStackTrace();
 		}
 		model.addObject("documents",documents);
+		t.stop();
 		return model;
+		
 	}
 	
 	@GetMapping("/general-home_1")
@@ -106,14 +107,9 @@ public class GeneralController extends BaseController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Thread t = new Thread() {
-			@Override
-			public void run() {
-				service.save();
-			}
-		};
-		t.start();
 		
+				service.save();
+			
 		return "redirect:/general-home";
 	}
 	

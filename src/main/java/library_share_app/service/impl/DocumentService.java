@@ -74,7 +74,7 @@ public class DocumentService implements IDocumentService{
 	
 	
 	@Override
-	public synchronized  void findAll() {
+	public synchronized void findAll() {
 		
 		List<DocumentDTO> list = new ArrayList<DocumentDTO>();
 		List<DocumentEntity> entities = repository.findAll();
@@ -104,38 +104,6 @@ public class DocumentService implements IDocumentService{
 	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public void save1() {
-			 try {
-					DataInputStream din = new DataInputStream(SystemConstant.socket.getInputStream());
-					String kq = din.readUTF();
-					System.out.println(kq);
-					kq = din.readUTF();
-					System.out.println(kq);
-					kq = din.readUTF();
-					System.out.println(kq);
-					boolean kq1 = din.readBoolean();
-					System.out.println(kq1);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			
-		
-	}
 	
 
 	public void fileReceive(long fileSize,String file_name) throws IOException {
