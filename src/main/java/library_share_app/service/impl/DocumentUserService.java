@@ -11,7 +11,6 @@ import library_share_app.convert.UserConvert;
 import library_share_app.dto.DocumentUserDTO;
 import library_share_app.dto.UserDTO;
 import library_share_app.entity.DocumentUserEntity;
-import library_share_app.entity.UserEntity;
 import library_share_app.repository.DocumentUserRepository;
 import library_share_app.service.IDocumentUserService;
 
@@ -43,7 +42,7 @@ public class DocumentUserService implements IDocumentUserService{
 		UserDTO user = userService.findOne(id);
 		List<DocumentUserDTO> list = new ArrayList<DocumentUserDTO>();
 		if (user!=null) {
-			List<DocumentUserEntity> entities = repository.findByUser(userConvert.toEntity(user));
+			List<DocumentUserEntity> entities = repository.findByUserOrderByIdDesc(userConvert.toEntity(user));
 			for (DocumentUserEntity entity:entities) {
 				list.add(convert.toDTO(entity));
 			}

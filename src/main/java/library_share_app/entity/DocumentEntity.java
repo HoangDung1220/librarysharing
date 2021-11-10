@@ -35,7 +35,7 @@ public class DocumentEntity {
 	private String sizeFile;
 	
 	@Column
-	private Date SharedDate;
+	private Date sharedDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -62,7 +62,7 @@ public class DocumentEntity {
 		this.description = description;
 		this.status = status;
 		this.sizeFile = sizeFile;
-		this.SharedDate = sharedDate;
+		this.sharedDate = sharedDate;
 		this.category = category;
 		this.user = user;
 	}
@@ -116,11 +116,11 @@ public class DocumentEntity {
 	}
 
 	public Date getSharedDate() {
-		return SharedDate;
+		return sharedDate;
 	}
 
 	public void setSharedDate(Date sharedDate) {
-		SharedDate = sharedDate;
+		this.sharedDate = sharedDate;
 	}
 
 	public CategoryEntity getCategory() {

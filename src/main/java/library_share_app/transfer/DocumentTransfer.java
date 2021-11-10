@@ -53,6 +53,7 @@ public class DocumentTransfer {
 				        Date date = formatter.parse(d[0]);  
 				        dto.setSharedDate(date);
 				    } catch (ParseException e) {e.printStackTrace();}   
+				dto.setTime(d[0]);
 				dto.setSizeFile(din.readUTF());
 				dto.setStatus(din.readBoolean());
 				dto.setId_Category(din.readLong());

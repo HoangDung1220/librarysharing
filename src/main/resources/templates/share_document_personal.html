@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Dormitory-Library</title>
+		<title>Personal-Page</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -16,7 +16,8 @@
 	</head>
 	
 	<body class="no-skin">
-		<div id="navbar" class="navbar navbar-default">
+	
+				<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
 			</script>
@@ -43,14 +44,191 @@
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-					
+						
+						<li class="purple">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-exclamation-triangle"></i>
+									8 Notifications
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar navbar-pink">
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
+														New Comments
+													</span>
+													<span class="pull-right badge badge-info">+12</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<i class="btn btn-xs btn-primary fa fa-user"></i>
+												Bob just signed up as an editor ...
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
+														New Orders
+													</span>
+													<span class="pull-right badge badge-success">+8</span>
+												</div>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<div class="clearfix">
+													<span class="pull-left">
+														<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
+														Followers
+													</span>
+													<span class="pull-right badge badge-info">+11</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="#">
+										See all notifications
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="green">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#" class="clearfix">
+												<img src="assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#" class="clearfix">
+												<img src="assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html">
+										See all messages
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
 									<div th:utext="${name}"> </div>
-														
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -58,9 +236,9 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a th:href="@{/personal-home(id=${id_user})}">
+									<a th:href="@{/general-home(id=${id_user})}">
 										<i class="ace-icon fa fa-cog"></i>
-										Trang cá nhân
+										Trang chung
 									</a>
 								</li>
 								<li>
@@ -69,6 +247,8 @@
 										Cài đặt
 									</a>
 								</li>
+
+								
 
 								<li class="divider"></li>
 
@@ -84,6 +264,7 @@
 				</div>
 			</div><!-- /.navbar-container -->
 		</div>
+	
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
@@ -100,7 +281,7 @@
 					<li class="active">
 						<a href="index.html">
 							<i class="menu-icon fa fa-tachometer"></i>
-							<span class="menu-text"> Tài liệu </span>
+							<span class="menu-text"> Tài liệu của tôi </span>
 						</a>
 
 						<b class="arrow"></b>
@@ -110,161 +291,58 @@
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text"> Thể loại </span>
+							<span class="menu-text"> Được chia sẻ với tôi </span>
 
-							<b class="arrow fa fa-angle-down"></b>
 						</a>
 
-						<b class="arrow"></b>
+					
+					</li>
+						<li class="">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-clock-o" aria-hidden="true"></i>
+							<span class="menu-text"> Gần đây </span>
 
-						<ul class="submenu" th:each="category: ${categories}">
-							<li class="">
-								<a th:href="@{/document_category(id=${id_user},id_category=${category.id})}">
-									<i class="menu-icon fa fa-caret-right"  ></i>
-									 <span th:text="${category.name}"></span>
-								</a>
+						</a>
 
-								<b class="arrow"></b>
-							</li>
-
-						
-						</ul>
+					
 					</li>
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-pencil-square-o"></i>
-							<span class="menu-text"> Thông tin </span>
+							<i class="menu-icon fa fa-star-o" aria-hidden="true"></i>
+							<span class="menu-text"> Tài liệu quan trọng </span>
 
-							<b class="arrow fa fa-angle-down"></b>
 						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="form-elements.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Form Elements
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="form-elements-2.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Form Elements 2
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="form-wizard.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Wizard &amp; Validation
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="wysiwyg.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Wysiwyg &amp; Markdown
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="dropzone.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Dropzone File Upload
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-						</ul>
+						
 					</li>
+
 					<li class="">
 						<a href="gallery.html">
-							<i class="menu-icon fa fa-picture-o"></i>
-							<span class="menu-text"> Người dùng </span>
+							<i class="menu-icon fa fa-trash-o" aria-hidden="true"></i>
+							<span class="menu-text">Thùng rác  </span>
 						</a>
 
 						<b class="arrow"></b>
 					</li>
 
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-tag"></i>
-							<span class="menu-text"> Khác </span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="profile.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									User Profile
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="inbox.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Inbox
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							<li class="">
-								<a href="pricing.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Pricing Tables
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-
-							<li class="">
-								<a href="timeline.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Timeline
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-
-							
-							<li class="">
-								<a href="login.html">
-									<i class="menu-icon fa fa-caret-right"></i>
-									Login &amp; Register
-								</a>
-
-								<b class="arrow"></b>
-							</li>
-						</ul>
-					</li>
-
+			
 					
 					
-				</ul>
-		<!-- /.nav-list -->
+				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 				</div>
+				<div style="margin-left: 10px"><b>Liên hệ</b></div>
+				<br>
+				<ul th:each="user : ${users_active}" >
+				
+					<li style=" color : green; font-size: 20px">
+					<span style=" color : black; font-size: 13px" th:utext="${user.fullname}"></span>
+					</li>
+										
+				</ul>
+				
 
 				<script type="text/javascript">
 					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
@@ -281,9 +359,9 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a th:href="@{/general-home(id=${id_user})}">Trang chủ</a>
+								<a th:href="@{/personal-home(id=${id_user})}">Trang chủ</a>
 							</li>
-							<li class="active">Tài liệu</li>
+							<li class="active">Được chia sẻ với tôi</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -293,228 +371,65 @@
 									<i class="ace-icon fa fa-search nav-search-icon"></i>
 								</span>
 							</form>
-						</div><!-- /.nav-search -->
-					</div>
+						</div>
+						<!-- /.nav-search -->
+											</div>
 
-					<div class="page-content">
-						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
-					</div>
+	
+			<div id="timeline-2" >
+									<div class="row">
+										<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+											<div th:each="doc : ${documents}">
+											<div class="timeline-container timeline-style2">
+												
+												<span class="timeline-label">
+													<b th:utext="${doc.time}"></b>
+												</span>
 
-								<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">Tài liệu</h3>
-
-										<div class="clearfix">
-											<div class="pull-right tableTools-container"></div>
-										</div>
-										
-
-										<!-- div.table-responsive -->
-
-										<!-- div.dataTables_borderWrap -->
-										
-										<div>
-										  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
-											+ Upload
-										  </button>
-										</div> 
-										
-											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
-												<thead>
-													<tr>
-														<th class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</th>
-														<th>Chủ đề</th>
-														<th>Tài liệu</th>
+												<div class="timeline-items">
+													<div class="timeline-item clearfix">
 														
-														<th class="hidden-480">Mô tả</th>
-														<th>Thể loại</th>
-														<th>Kích thước</th>
-															
-														<th>
-															<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-															Ngày chia sẻ
-														</th>
-														<th class="hidden-480">Trạng thái</th>
-														<th>Người chia sẻ</th>
-														<th></th>
-													</tr>
-												</thead>
 
-												<tbody>
-													<tr th:each="doc : ${documents}">
-														<td class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</td>
+														<div class="widget-box transparent">
+															<div class="widget-body">
+																<div class="widget-main no-padding">
+																	<span class="bigger-110">
+																		<span th:utext="${doc.user.fullname}"></span>
+																		share document
+																	</span>
 
-														<td  th:utext="${doc.displayFileName}">
-															<a href="#"></a>
-														</td>
-														
-														<td ><a href="" th:utext="${doc.fileName}"></a></td>
-														
-														<td th:utext="${doc.description}"></td>
-														
-														<td class="hidden-480" th:utext="${doc.category.name}"></td>
-														
-														<td th:utext="${doc.sizeFile}"></td>
-														
-														<td th:utext="${doc.SharedDate}"></td>
-
-														<td class="hidden-480">
-															<span class="label label-sm label-warning">Expiring</span>
-														</td>
-														
-														<td th:utext="${doc.user.fullname}"></td>
-
-														<td>
-															<div class="hidden-sm hidden-xs action-buttons">
-																<a class="blue" href="#">
-																	<i class="ace-icon fa fa-search-plus bigger-130"></i>
-																</a>
-
-																<a class="green" href="#">
-																	<i class="ace-icon fa fa-pencil bigger-130"></i>
-																</a>
-
-																<a class="red" href="#">
-																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
-																</a>
-																<a class="black" href="#">
-																	<i class="fa fa-download bigger-130" aria-hidden="true"></i>
-																</a>
-															</div>
-
-															<div class="hidden-md hidden-lg">
-																<div class="inline pos-rel">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-																		<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-																	</button>
-
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																				</span>
-																			</a>
-																			
-																		</li>
-																	</ul>
+																	
+																	<br>
+																		<span class="bigger-110">
+																		<span th:utext="${doc.description}"></span>
+																		
+																	</span>
+																	<br />
+																	<i class="ace-icon fa fa-hand-o-right grey bigger-125"></i>
+																	<a href="#" th:utext="${doc.fileName}"> &hellip;</a>
 																</div>
 															</div>
-														</td>
-														
-													</tr>
-													
-													
-												</tbody>
-											</table>
-								  	 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-									  <div class="modal-dialog" role="document">
-										<div class="modal-content">
-										  <div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Upload Document</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
-										  </div>
-								     <div class="modal-body">
-											<form th:action="@{/document/addDocument(id=${id_user})}" th:object="${document}" method="POST">
-											<div class="form-group">
-												<label for="file-name" class="col-form-label">File name:</label>
-												<input type="text" class="form-control" id="displayFileName" th:field="*{displayFileName}">
-											</div>
-											  
-											  <div class="form-group">
-												<label for="description-name" class="col-form-label">Description:</label>
-												<input type="text" class="form-control" id="description" th:field="*{description}">
-											  </div>
-											  
-											    <div class="form-group">
-												<label for="file-link-name" class="col-form-label">Attachment file:</label>
-												<input type="file" class="form-control" id="fileName" th:field="*{fileName}">
-											   </div>
-											   
-											  <div class="form-group">
-											  <label for="category-name" class="col-form-label">Category :</label>
-											  <select th:field="*{id_Category}" class="form-control" id = "category">
-												<option th:each ="cate : ${categories}" 
-												th:value ="${cate.id}"
-												th:utext ="${cate.name}"
-												/>		  
-											 </select>
-											  </div>
-											  
-											  <div class="form-group">
-											  <label for="share-for-name" class="col-form-label">Share for:</label>
-											  <select th:field="*{status}" class="form-control" id = "status">
-   												 <option value="true">Share all person</option>
-  												 <option value="false">Share private person</option>
-											 </select>
-											  </div>
-											  
-											   <div class="form-group">
-											  <label for="email-name" class="col-form-label">Email Share:</label>
-													<input type="text" class="form-control" id="emailShare" th:field="*{emailShare}">
-											  </div>
-											
-											  
-											  
-												
-												 <div class="form-group">
-														   <button type="submit" class="btn btn-primary">Submit</button>
-														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+														</div>
+													</div>
+													<br>
+												</div><!-- /.timeline-items -->
+											</div><!-- /.timeline-container -->
 
-												</div>
-											</form>
-										  </div>
-										 
+											
 										</div>
-									  </div>
-									</div> 
-									
-									
 										</div>
 									</div>
 								</div>
-
-							
-
-							
-								</div><!-- /.row -->
-					</div><!-- /.page-content -->
-				</div>
-			</div><!-- /.main-content -->
+	</div>
+	
+	
 
 			<div class="footer">
 				<div class="footer-inner">
-					
+					<div class="footer-content">
+						
+
+					</div>
 				</div>
 			</div>
 

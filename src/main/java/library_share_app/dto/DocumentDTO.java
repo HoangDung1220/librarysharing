@@ -10,18 +10,14 @@ public class DocumentDTO {
 	private String description;
 	private boolean status;
 	private String sizeFile;
-	private Date SharedDate;
+	private Date sharedDate;
 	private Long id_Category;
 	private CategoryDTO category;
 	private Long id_user;
 	private UserDTO user;
 	private String emailShare;
+	private String time;
 	
-	
-	
-	
-	
-
 	public DocumentDTO() {
 	}
 
@@ -35,12 +31,21 @@ public class DocumentDTO {
 		this.description = description;
 		this.status = status;
 		this.sizeFile = sizeFile;
-		SharedDate = sharedDate;
+		this.sharedDate = sharedDate;
 		this.id_Category = id_Category;
 		this.category = category;
 		this.id_user = id_user;
 		this.user = user;
 		this.emailShare= emailShare;
+	}
+	
+	public String getTime() {
+		return time;
+	}
+
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 	public String getEmailShare() {
@@ -115,12 +120,12 @@ public class DocumentDTO {
 
 
 	public Date getSharedDate() {
-		return SharedDate;
+		return sharedDate;
 	}
 
 
 	public void setSharedDate(Date sharedDate) {
-		SharedDate = sharedDate;
+		this.sharedDate = sharedDate;
 	}
 
 

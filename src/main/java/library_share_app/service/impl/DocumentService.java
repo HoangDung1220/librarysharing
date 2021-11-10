@@ -17,14 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import library_share_app.constant.SystemConstant;
+import library_share_app.convert.CategoryConvert;
 import library_share_app.convert.DocumentConvert;
 import library_share_app.convert.DocumentUserConvert;
 import library_share_app.convert.UserConvert;
+import library_share_app.dto.CategoryDTO;
 import library_share_app.dto.DocumentDTO;
 import library_share_app.dto.DocumentUserDTO;
 import library_share_app.dto.UserDTO;
 import library_share_app.entity.DocumentEntity;
 import library_share_app.entity.DocumentUserEntity;
+import library_share_app.entity.UserEntity;
 import library_share_app.repository.DocumentRepository;
 import library_share_app.service.IDocumentService;
 
@@ -51,6 +54,9 @@ public class DocumentService implements IDocumentService{
 	
 	@Autowired
 	private CategoryService category;
+	
+	@Autowired
+	private CategoryConvert categoryConvert;
 	
 	private DataInputStream din;
 	
@@ -243,6 +249,95 @@ public class DocumentService implements IDocumentService{
 			dto = convert.toDTO(entity.get());
 		}
 		return dto;
+	}
+
+
+	@Override
+	public List<DocumentDTO> findAllByCategory(Long id_category) {
+		List<DocumentDTO> list_dto = new ArrayList<DocumentDTO>();
+		CategoryDTO category_dto = category.findOneById(id_category);
+		
+		if (category_dto!=null) {
+			List<DocumentEntity> list = repository.findByCategory(categoryConvert.toEntity(category_dto));
+			for (DocumentEntity entity:list) {
+				DocumentDTO dto = convert.toDTO(entity);
+				list_dto.add(dto);
+			}
+			
+			Socket soc = null;
+			 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
+				 if (item.getKey().getId()==SystemConstant.id_user_current) {
+					soc = item.getValue(); 
+				 }
+		       } 
+			try {
+				dos = new DataOutputStream(soc.getOutputStream());
+				dos.writeInt(list.size());
+
+				for (DocumentDTO dto :list_dto) {
+					dos.writeUTF(dto.getDisplayFileName());
+					dos.writeUTF(dto.getDescription());
+					dos.writeUTF(dto.getFileName());
+					dos.writeUTF(String.valueOf(dto.getSharedDate()));
+					dos.writeUTF(dto.getSizeFile());
+					dos.writeBoolean(dto.isStatus());
+					dos.writeLong(dto.getId_Category());
+					dos.writeLong(dto.getId_user());
+					dos.writeLong(dto.getId());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<DocumentDTO> findAllShared() {
+		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current);
+		UserDTO user = userService.findOne(SystemConstant.id_user_current);
+		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
+		for (DocumentUserDTO doc : document_user) {
+			DocumentDTO dto = null;
+			DocumentEntity entity = repository.findOneByIdAndUserNot(doc.getId_document(), userConvert.toEntity(user));
+			if (entity!=null) {
+				dto = convert.toDTO(entity);
+				documents.add(dto);
+			}
+		}
+		
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
+			 if (item.getKey().getId()==SystemConstant.id_user_current) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		 
+			try {
+				dos = new DataOutputStream(soc.getOutputStream());
+				dos.writeInt(documents.size());
+
+				for (DocumentDTO dto :documents) {
+					dos.writeUTF(dto.getDisplayFileName());
+					dos.writeUTF(dto.getDescription());
+					dos.writeUTF(dto.getFileName());
+					dos.writeUTF(String.valueOf(dto.getSharedDate()));
+					dos.writeUTF(dto.getSizeFile());
+					dos.writeBoolean(dto.isStatus());
+					dos.writeLong(dto.getId_Category());
+					dos.writeLong(dto.getId_user());
+					dos.writeLong(dto.getId());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		 
+		 
+		 
+		return documents;
 	}
 	
 	

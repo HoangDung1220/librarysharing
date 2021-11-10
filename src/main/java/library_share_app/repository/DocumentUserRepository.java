@@ -9,6 +9,6 @@ import library_share_app.entity.UserEntity;
 
 public interface DocumentUserRepository extends JpaRepository<DocumentUserEntity, Long> {
 	
-	List<DocumentUserEntity> findByUser(UserEntity user);
+	List<DocumentUserEntity> findByUserOrderByIdDesc(UserEntity user);
 
 }

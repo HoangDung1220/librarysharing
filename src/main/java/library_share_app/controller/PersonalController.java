@@ -2,10 +2,8 @@ package library_share_app.controller;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -70,6 +68,22 @@ public class PersonalController {
 		List<DocumentDTO> list = documentTranfer.readDocumentClient();
 		model.addObject("documents",list);
 
+
+		return model;
+	}
+	
+	@GetMapping("/sharing-document")
+	public ModelAndView login(@RequestParam String id) {
+		SystemConstant.id_user_current= Long.parseLong(id);
+		String name = userService.findOne(Long.parseLong(id)).getFullname();
+		ModelAndView model = new ModelAndView();
+		documentService.findAllShared();
+		List<DocumentDTO> list = documentTranfer.readDocumentClient();
+		
+		model.addObject("documents",list);
+		model.setViewName("/share_document_personal");
+		model.addObject("name",name);
+		model.addObject("id_user", id);
 
 		return model;
 	}

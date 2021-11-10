@@ -283,7 +283,9 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a th:href="@{/general-home(id=${id_user})}">Trang chủ</a>
 							</li>
-							<li class="active">Tài liệu</li>
+							<li>Thể loại</li>
+							<li class="active" th:utext=${name_category} ></li>
+							
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -315,11 +317,7 @@
 
 										<!-- div.dataTables_borderWrap -->
 										
-										<div>
-										  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
-											+ Upload
-										  </button>
-										</div> 
+									
 										
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
@@ -444,57 +442,7 @@
 											  <span aria-hidden="true">&times;</span>
 											</button>
 										  </div>
-								     <div class="modal-body">
-											<form th:action="@{/document/addDocument(id=${id_user})}" th:object="${document}" method="POST">
-											<div class="form-group">
-												<label for="file-name" class="col-form-label">File name:</label>
-												<input type="text" class="form-control" id="displayFileName" th:field="*{displayFileName}">
-											</div>
-											  
-											  <div class="form-group">
-												<label for="description-name" class="col-form-label">Description:</label>
-												<input type="text" class="form-control" id="description" th:field="*{description}">
-											  </div>
-											  
-											    <div class="form-group">
-												<label for="file-link-name" class="col-form-label">Attachment file:</label>
-												<input type="file" class="form-control" id="fileName" th:field="*{fileName}">
-											   </div>
-											   
-											  <div class="form-group">
-											  <label for="category-name" class="col-form-label">Category :</label>
-											  <select th:field="*{id_Category}" class="form-control" id = "category">
-												<option th:each ="cate : ${categories}" 
-												th:value ="${cate.id}"
-												th:utext ="${cate.name}"
-												/>		  
-											 </select>
-											  </div>
-											  
-											  <div class="form-group">
-											  <label for="share-for-name" class="col-form-label">Share for:</label>
-											  <select th:field="*{status}" class="form-control" id = "status">
-   												 <option value="true">Share all person</option>
-  												 <option value="false">Share private person</option>
-											 </select>
-											  </div>
-											  
-											   <div class="form-group">
-											  <label for="email-name" class="col-form-label">Email Share:</label>
-													<input type="text" class="form-control" id="emailShare" th:field="*{emailShare}">
-											  </div>
-											
-											  
-											  
-												
-												 <div class="form-group">
-														   <button type="submit" class="btn btn-primary">Submit</button>
-														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-												</div>
-											</form>
-										  </div>
-										 
+					
 										</div>
 									  </div>
 									</div> 

@@ -28,6 +28,7 @@ import library_share_app.dto.UserDTO;
 import library_share_app.service.impl.CategoryService;
 import library_share_app.service.impl.DocumentService;
 import library_share_app.service.impl.UserService;
+import library_share_app.transfer.DocumentTransfer;
 
 @Controller
 public class GeneralController extends BaseController{
@@ -39,6 +40,9 @@ public class GeneralController extends BaseController{
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DocumentTransfer documentTransfer;
 	
 	
 	@GetMapping("/general-home")
@@ -145,6 +149,23 @@ public class GeneralController extends BaseController{
 		StringBuilder st = new StringBuilder("redirect:/general-home?id=");
 		st.append(id1);
 		return st.toString();
+	}
+	
+	@GetMapping("/document_category")
+	public ModelAndView getHomePage(@RequestParam("id") String id,@RequestParam("id_category") String id_category) {
+	
+		SystemConstant.id_user_current=Long.parseLong(id);
+		service.findAllByCategory(Long.parseLong(id_category));
+		List<DocumentDTO> documents = documentTransfer.readDocumentClient();
+		String name = userService.findOne(Long.parseLong(id)).getFullname();
+		String name_category = categoryService.findOneById(Long.parseLong(id_category)).getName();
+		model.addObject("documents",documents);
+		model.addObject("name",name);
+		model.addObject("name_category",name_category);
+		model.setViewName("/public_page_category");
+		model.addObject("id_user", id);
+		return model;
+		
 	}
 	
 	
