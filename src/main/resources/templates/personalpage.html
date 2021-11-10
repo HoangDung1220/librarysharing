@@ -413,25 +413,25 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
-														<th>Title</th>
-														<th>Document</th>
+														<th>Chủ đề</th>
+														<th>Tài liệu</th>
 														
-														<th class="hidden-480">Content</th>
-														<th>Category</th>
-
+														<th class="hidden-480">Mô tả</th>
+														<th>Thể loại</th>
+														<th>Kích thước</th>
 															
 														<th>
 															<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-															Share Date
+															Ngày chia sẻ
 														</th>
-														<th class="hidden-480">Status</th>
-														<th>Share By</th>
+														<th class="hidden-480">Trạng thái</th>
+														<th>Người chia sẻ</th>
 														<th></th>
 													</tr>
 												</thead>
 
 												<tbody>
-													<tr>
+													<tr th:each="doc : ${documents}">
 														<td class="center">
 															<label class="pos-rel">
 																<input type="checkbox" class="ace" />
@@ -439,18 +439,25 @@
 															</label>
 														</td>
 
-														<td>
-															<a href="#">app.com</a>
+														<td  th:utext="${doc.displayFileName}">
+															<a href="#"></a>
 														</td>
-														<td>$45</td>
-														<td>$45</td>
-														<td class="hidden-480">3,330</td>
-														<td>Feb 12</td>
+														
+														<td ><a href="" th:utext="${doc.fileName}"></a></td>
+														
+														<td th:utext="${doc.description}"></td>
+														
+														<td class="hidden-480" th:utext="${doc.category.name}"></td>
+														
+														<td th:utext="${doc.sizeFile}"></td>
+														
+														<td th:utext="${doc.SharedDate}"></td>
 
 														<td class="hidden-480">
 															<span class="label label-sm label-warning">Expiring</span>
 														</td>
-														<td>Hoang Dung</td>
+														
+														<td th:utext="${doc.user.fullname}"></td>
 
 														<td>
 															<div class="hidden-sm hidden-xs action-buttons">
@@ -505,90 +512,10 @@
 																</div>
 															</div>
 														</td>
+														
 													</tr>
-
-
-
-
-													<tr>
-														<td class="center">
-															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
-																<span class="lbl"></span>
-															</label>
-														</td>
-
-														<td>
-															<a href="#">up.com</a>
-														</td>
-														<td>$95</td>
-														<td>$95</td>
-														<td class="hidden-480">8,520</td>
-														<td>Feb 22</td>
-														<td class="hidden-480">
-															<span class="label label-sm label-info arrowed arrowed-righ">Sold</span>
-														</td>
-														<td>Hoang Dung
-</td>
-
-														<td>
-															<div class="hidden-sm hidden-xs action-buttons">
-																<a class="blue" href="#">
-																	<i class="ace-icon fa fa-search-plus bigger-130"></i>
-																</a>
-
-																<a class="green" href="#">
-																	<i class="ace-icon fa fa-pencil bigger-130"></i>
-																</a>
-
-																<a class="red" href="#">
-																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
-																</a>
-																<a class="black" href="#">
-																	<i class="fa fa-download bigger-130" aria-hidden="true"></i>
-																</a>
-															</div>
-
-															<div class="hidden-md hidden-lg">
-																<div class="inline pos-rel">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-																		<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-																	</button>
-
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-
-																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</td>
-													</tr>
-
-											
-
-
+													
+													
 												</tbody>
 											</table>
 											 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

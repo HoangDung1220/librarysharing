@@ -53,21 +53,13 @@ public class GeneralController extends BaseController{
 
 		service.findAll();
 
-		//Thread t = new Thread() {
-		//	@Override
-			//public void run() {
-			//	service.findAll();
-		//	}
-		//};
-		//t.start();
-		/*Chon socket_client*/
+		
 		Socket soc = null;
 		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
 			 if (item.getKey().getId()==Long.parseLong(id)) {
 				soc = item.getValue(); 
 			 }
 	       } 
-		System.out.println("Client: "+soc);
 		try {
 				DataInputStream din = new DataInputStream(soc.getInputStream());
 				int list_size = din.readInt();
@@ -105,7 +97,6 @@ public class GeneralController extends BaseController{
 		model.addObject("documents",documents);
 		String name = userService.findOne(Long.parseLong(id)).getFullname();
 		model.addObject("name",name);
-		System.out.println("--------------------------");
 		return model;
 		
 	}

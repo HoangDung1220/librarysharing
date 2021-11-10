@@ -6,5 +6,6 @@ public interface IDocumentService {
 	
 	public DocumentDTO save();
 	public void findAll();
-
+	public void findAllPersonal();
+	public DocumentDTO findOne(Long id);
 }

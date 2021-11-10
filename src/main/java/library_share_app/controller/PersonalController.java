@@ -2,8 +2,10 @@ package library_share_app.controller;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,27 +14,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import library_share_app.constant.SystemConstant;
+import library_share_app.dto.DocumentDTO;
 import library_share_app.dto.UserDTO;
+import library_share_app.service.impl.DocumentService;
 import library_share_app.service.impl.UserService;
+import library_share_app.transfer.DocumentTransfer;
 
 @Controller
 public class PersonalController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DocumentService documentService;
+	
+	@Autowired
+	private DocumentTransfer documentTranfer;
 
 	@GetMapping("/personal-home")
 	public ModelAndView getHome1(@RequestParam String id) {
+		SystemConstant.id_user_current= Long.parseLong(id);
 		ModelAndView model = new ModelAndView();
 		model.setViewName("/personalpage");
-		Thread t = new Thread() {
-			@Override
-			public void run() {
-				userService.getUserActive();
-			}
-		};
-		t.start();
+		userService.getUserActive();
 		List<UserDTO> users = new ArrayList<UserDTO>();
-		System.out.println(SystemConstant.socket_client+" "+SystemConstant.socket);
 		try {
 			DataInputStream din = new DataInputStream(SystemConstant.socket_client.getInputStream());
 			int list_size = din.readInt();
@@ -54,11 +59,16 @@ public class PersonalController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		model.addObject("users_active", users);
 		String name = userService.findOne(Long.parseLong(id)).getFullname();
 		model.addObject("name",name);
 		model.addObject("id_user", id);
 		
+		
+		documentService.findAllPersonal();
+		List<DocumentDTO> list = documentTranfer.readDocumentClient();
+		model.addObject("documents",list);
 
 
 		return model;

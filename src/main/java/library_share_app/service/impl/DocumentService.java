@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import library_share_app.convert.DocumentConvert;
 import library_share_app.convert.DocumentUserConvert;
 import library_share_app.convert.UserConvert;
 import library_share_app.dto.DocumentDTO;
+import library_share_app.dto.DocumentUserDTO;
 import library_share_app.dto.UserDTO;
 import library_share_app.entity.DocumentEntity;
 import library_share_app.entity.DocumentUserEntity;
@@ -96,8 +98,8 @@ public class DocumentService implements IDocumentService{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		//DocumentEntity entity = convert.toEntity(document);
 		DocumentDTO output = convert.toDTO(repository.save(convert.toEntity(document)));
+		SaveDocumentUserSelf(SystemConstant.id_user_current,output);
 		if (email_share.length()>0) {
 			SaveDocumentUser(email_share, output);
 		}
@@ -107,7 +109,6 @@ public class DocumentService implements IDocumentService{
 	
 	@Override
 	public  void findAll() {
-		System.out.println("server find all");
 		List<DocumentDTO> list = new ArrayList<DocumentDTO>();
 		List<DocumentEntity> entities = repository.findAll();
 		for (DocumentEntity entity:entities) {
@@ -120,7 +121,6 @@ public class DocumentService implements IDocumentService{
 				soc = item.getValue(); 
 			 }
 	       } 
-		 System.out.println("server: "+soc);
 		try {
 			dos = new DataOutputStream(soc.getOutputStream());
 			dos.writeInt(list.size());
@@ -175,6 +175,74 @@ public class DocumentService implements IDocumentService{
 			}
 		}
 		
+	}
+	
+	public void SaveDocumentUserSelf(Long id,DocumentDTO document) {
+		
+			UserDTO dto = userService.findOne(id);
+			if (dto != null) {
+				DocumentUserEntity entity= new DocumentUserEntity();
+				entity.setDocument(convert.toEntity(document));
+				entity.setStatus(true);
+				entity.setUser(userConvert.toEntity(dto));
+				document_userService.save(document_userConvert.toDTO(entity));
+			}
+		
+		
+	}
+
+
+	@Override
+	public void findAllPersonal() {
+		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current);
+		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
+		for (DocumentUserDTO doc : document_user) {
+			DocumentDTO dto = null;
+			Optional<DocumentEntity> entity = repository.findById(doc.getId_document());
+			if (entity.isPresent()) {
+				dto = convert.toDTO(entity.get());
+				documents.add(dto);
+			}
+		}
+		
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
+			 if (item.getKey().getId()==SystemConstant.id_user_current) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		try {
+			dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeInt(documents.size());
+
+			for (DocumentDTO dto :documents) {
+				dos.writeUTF(dto.getDisplayFileName());
+				dos.writeUTF(dto.getDescription());
+				dos.writeUTF(dto.getFileName());
+				dos.writeUTF(String.valueOf(dto.getSharedDate()));
+				dos.writeUTF(dto.getSizeFile());
+				dos.writeBoolean(dto.isStatus());
+				dos.writeLong(dto.getId_Category());
+				dos.writeLong(dto.getId_user());
+				dos.writeLong(dto.getId());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
+
+	@Override
+	public DocumentDTO findOne(Long id) {
+		DocumentDTO dto = null;
+		Optional<DocumentEntity> entity = repository.findById(id);
+		if (entity.isPresent()) {
+			dto = convert.toDTO(entity.get());
+		}
+		return dto;
 	}
 	
 	
