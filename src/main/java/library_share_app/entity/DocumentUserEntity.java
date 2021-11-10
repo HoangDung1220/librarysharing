@@ -27,6 +27,12 @@ public class DocumentUserEntity {
 	
 	@Column
 	private boolean status;
+	
+	
+
+	public DocumentUserEntity() {
+		super();
+	}
 
 	public DocumentUserEntity(Long id, DocumentEntity document, UserEntity user, boolean status) {
 		super();

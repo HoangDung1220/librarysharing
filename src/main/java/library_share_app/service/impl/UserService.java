@@ -3,6 +3,10 @@ package library_share_app.service.impl;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +48,46 @@ public class UserService implements IUserService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public void getUserActive() {
+		try {
+			DataOutputStream dos = new DataOutputStream(SystemConstant.socket.getOutputStream());
+			dos.writeInt(SystemConstant.list_user_active.size());
+			List<UserDTO> users = new ArrayList<UserDTO>();
+			 Set<UserDTO> keySet = SystemConstant.list_user_active.keySet();
+		        for (UserDTO key : keySet) {
+		        	users.add(key);
+		        }			
+		    for (UserDTO dto :users) {
+			dos.writeLong(dto.getId());
+			dos.writeUTF(dto.getFullname());
+			dos.writeUTF(dto.getGmail());
+			dos.writeUTF(dto.getNameRoom());
+			dos.writeUTF(dto.getUsername());
+			dos.writeUTF(dto.getPassword());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+	}
+
+	@Override
+	public UserDTO findOne(Long id) {
+		Optional<UserEntity> entity = userRepository.findById(id);
+		UserDTO dto = userConvert.toDTO(entity.get());
+		return dto;
+	}
+
+	@Override
+	public UserDTO findByGmail(String gmail) {
+		Optional<UserEntity> entity = userRepository.findOneByGmail(gmail);
+		UserDTO dto = null;
+		if (entity.isPresent()) {
+			dto = userConvert.toDTO(entity.get());
+		}
+		return dto;
 	}
 
 }

@@ -8,28 +8,26 @@ import java.net.UnknownHostException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import library_share_app.constant.SystemConstant;
 import library_share_app.dto.UserDTO;
-import library_share_app.service.impl.DocumentService;
 import library_share_app.service.impl.UserService;
 
 @Controller
 public class MainController extends BaseController {
 	
-	@Autowired
-	private DocumentService service;
+
 	
 	@Autowired
 	private UserService userService;
 	
 	
 	@GetMapping("/main-home")
-	public String getHome() {
-		System.out.println("hello");
+	public String getHome(Model model) {
 		Thread t = new Thread() {
 			
 			@Override
@@ -45,7 +43,7 @@ public class MainController extends BaseController {
 			}				
 		};
 		t.start();
-		
+		model.addAttribute("id_user", "0");
 		return "mainPage";
 	}
 
@@ -63,7 +61,8 @@ public class MainController extends BaseController {
 	}
 	
 	@PostMapping("/main")
-	public String login1(@ModelAttribute("username") String username , @ModelAttribute("password") String password) {
+	public String login1(@ModelAttribute("username") String username , @ModelAttribute("password") String password,Model model) {
+		
 		try {
 			DataOutputStream dos = new DataOutputStream(SystemConstant.socket_client.getOutputStream());
 			dos.writeUTF(username);
@@ -83,12 +82,13 @@ public class MainController extends BaseController {
 			String gmail=din.readUTF();
 			String username1=din.readUTF();
 			String password1=din.readUTF();
-			System.out.println(gmail+" "+fullname);
 			UserDTO user = new UserDTO(id, fullname, gmail, nameRoom, username1, password1, true);
 			if (user!=null) {
-				SystemConstant.list_user_active.put(SystemConstant.socket, user);
+				SystemConstant.list_user_active.put(user,SystemConstant.socket);
+				SystemConstant.list_socket_client.put(user,SystemConstant.socket_client);
+				model.addAttribute("id_user", user.getId());
 				return "mainPage";
-			}
+			} 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

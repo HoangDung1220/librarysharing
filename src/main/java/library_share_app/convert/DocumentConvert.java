@@ -23,7 +23,7 @@ public class DocumentConvert {
 		DocumentDTO dto = new DocumentDTO();
 		dto = modelMapper.map(entity, DocumentDTO.class);
 		dto.setId_Category(entity.getCategory().getId());
-	//	dto.setId_user(entity.getUser().getId());
+		dto.setId_user(entity.getUser().getId());
 		return dto;
 	}
 	

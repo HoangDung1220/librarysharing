@@ -49,7 +49,8 @@
 								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Hoang Dung
+									<div th:utext="${name}"> </div>
+														
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -57,7 +58,7 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a th:href="@{/personal-home}">
+									<a th:href="@{/personal-home(id=${id_user})}">
 										<i class="ace-icon fa fa-cog"></i>
 										Trang cá nhân
 									</a>
@@ -367,13 +368,13 @@
 														
 														<td th:utext="${doc.sizeFile}"></td>
 														
-														<td>Feb 12</td>
+														<td th:utext="${doc.SharedDate}"></td>
 
 														<td class="hidden-480">
 															<span class="label label-sm label-warning">Expiring</span>
 														</td>
 														
-														<td>Hoang Dung</td>
+														<td th:utext="${doc.user.fullname}"></td>
 
 														<td>
 															<div class="hidden-sm hidden-xs action-buttons">
@@ -444,12 +445,11 @@
 											</button>
 										  </div>
 								     <div class="modal-body">
-											<form th:action="@{/document/addDocument}" th:object="${document}" method="POST">
-											
+											<form th:action="@{/document/addDocument(id=${id_user})}" th:object="${document}" method="POST">
 											<div class="form-group">
 												<label for="file-name" class="col-form-label">File name:</label>
 												<input type="text" class="form-control" id="displayFileName" th:field="*{displayFileName}">
-											  </div>
+											</div>
 											  
 											  <div class="form-group">
 												<label for="description-name" class="col-form-label">Description:</label>
@@ -479,6 +479,10 @@
 											 </select>
 											  </div>
 											  
+											   <div class="form-group">
+											  <label for="email-name" class="col-form-label">Email Share:</label>
+													<input type="text" class="form-control" id="emailShare" th:field="*{emailShare}">
+											  </div>
 											
 											  
 											  

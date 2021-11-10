@@ -15,16 +15,19 @@ public class DocumentDTO {
 	private CategoryDTO category;
 	private Long id_user;
 	private UserDTO user;
+	private String emailShare;
 	
 	
 	
 	
+	
+
 	public DocumentDTO() {
 	}
 
 
 	public DocumentDTO(Long id, String displayFileName, String fileName, String description, boolean status,
-			String sizeFile, Date sharedDate, Long id_Category, CategoryDTO category, Long id_user, UserDTO user) {
+			String sizeFile, Date sharedDate, Long id_Category, CategoryDTO category, Long id_user, UserDTO user,String emailShare) {
 		super();
 		this.id = id;
 		this.displayFileName = displayFileName;
@@ -37,7 +40,18 @@ public class DocumentDTO {
 		this.category = category;
 		this.id_user = id_user;
 		this.user = user;
+		this.emailShare= emailShare;
 	}
+	
+	public String getEmailShare() {
+		return emailShare;
+	}
+
+
+	public void setEmailShare(String emailShare) {
+		this.emailShare = emailShare;
+	}
+
 
 
 	public Long getId() {

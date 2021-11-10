@@ -6,20 +6,28 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.Socket;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import library_share_app.constant.SystemConstant;
 import library_share_app.dto.DocumentDTO;
+import library_share_app.dto.UserDTO;
 import library_share_app.service.impl.CategoryService;
 import library_share_app.service.impl.DocumentService;
+import library_share_app.service.impl.UserService;
 
 @Controller
 public class GeneralController extends BaseController{
@@ -29,37 +37,65 @@ public class GeneralController extends BaseController{
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	@GetMapping("/general-home")
-	public ModelAndView getHomePage() {
+	public ModelAndView getHomePage(@RequestParam("id") String id) {
 		model.setViewName("/publicpage");
-		System.out.println("TRang general: "+SystemConstant.socket_client);
+		model.addObject("id_user", id);
 		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
 		DocumentDTO document = new DocumentDTO();
 		model.addObject("document",document);
-		Thread t = new Thread() {
-			@Override
-			public void run() {
-				service.findAll();
-			}
-		};
-		t.start();
-		
+		System.out.println("head controller");
+		SystemConstant.id_user_current=Long.parseLong(id);
+
+		service.findAll();
+
+		//Thread t = new Thread() {
+		//	@Override
+			//public void run() {
+			//	service.findAll();
+		//	}
+		//};
+		//t.start();
+		/*Chon socket_client*/
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
+			 if (item.getKey().getId()==Long.parseLong(id)) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		System.out.println("Client: "+soc);
 		try {
-				DataInputStream din = new DataInputStream(SystemConstant.socket_client.getInputStream());
+				DataInputStream din = new DataInputStream(soc.getInputStream());
 				int list_size = din.readInt();
+				
+				System.out.println("conroller: "+list_size);
 				for (int i=1;i<=list_size;i++)
 				{	
 					DocumentDTO dto = new DocumentDTO();
 					dto.setDisplayFileName(din.readUTF());
 					dto.setDescription(din.readUTF());
 					dto.setFileName(din.readUTF());
-				//	dto.setSharedDate(Date.valueOf(din.readUTF()));
+					String[] d = din.readUTF().split(" ");
+				
+					  
+					 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+					    try {  
+					        Date date = formatter.parse(d[0]);  
+					        dto.setSharedDate(date);
+					    } catch (ParseException e) {e.printStackTrace();}  
+					    
+					 
 					dto.setSizeFile(din.readUTF());
 					dto.setStatus(din.readBoolean());
 					dto.setId_Category(din.readLong());
+					dto.setId_user(din.readLong());
 					dto.setId(din.readLong());
 					dto.setCategory(categoryService.findOneById(dto.getId_Category()));
+					dto.setUser(userService.findOne(dto.getId_user()));
 					documents.add(dto);	
 				}
 			
@@ -67,34 +103,40 @@ public class GeneralController extends BaseController{
 			e.printStackTrace();
 		}
 		model.addObject("documents",documents);
-		t.stop();
+		String name = userService.findOne(Long.parseLong(id)).getFullname();
+		model.addObject("name",name);
+		System.out.println("--------------------------");
 		return model;
 		
 	}
 	
-	@GetMapping("/general-home_1")
-	public ModelAndView getHomePage1() {
-		model.setViewName("/publicpage");
-		DocumentDTO document = new DocumentDTO();
-		model.addObject("document",document);
-		return model;
-	}
+	
 	
 	@PostMapping("/document/addDocument")
-	public String saveDocument(@ModelAttribute("document") DocumentDTO document) {
+	public String saveDocument(@ModelAttribute("document") DocumentDTO document,@RequestParam("id") String id1) {
+		SystemConstant.id_user_current = Long.parseLong(id1);
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
+			 if (item.getKey().getId()==Long.parseLong(id1)) {
+				soc = item.getValue(); 
+			 }
+	       } 
 		
 		try {
-			DataOutputStream dos = new DataOutputStream(SystemConstant.socket_client.getOutputStream());
+			System.out.println("client add");
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 			dos.writeUTF(document.getDisplayFileName());
 			dos.writeUTF(document.getDescription());
 			dos.writeUTF(document.getFileName());
 			dos.writeBoolean(document.isStatus());
 			dos.writeLong(document.getId_Category());
+			dos.writeLong(Long.parseLong(id1));
 			StringBuilder sourcefile = new StringBuilder();
 			sourcefile.append(SystemConstant.upload+"\\"+document.getFileName());
 			File fileSource = new File(sourcefile.toString());
 			BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileSource));
 			dos.writeLong(fileSource.length());
+			dos.writeUTF(document.getEmailShare());
 			dos.flush();
 				int data;
 				while ((data = bis.read()) != -1) {
@@ -108,9 +150,10 @@ public class GeneralController extends BaseController{
 			e.printStackTrace();
 		}
 		
-				service.save();
-			
-		return "redirect:/general-home";
+		service.save();
+		StringBuilder st = new StringBuilder("redirect:/general-home?id=");
+		st.append(id1);
+		return st.toString();
 	}
 	
 	

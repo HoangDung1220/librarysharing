@@ -9,4 +9,6 @@ import library_share_app.entity.UserEntity;
 public interface UserRepository extends  JpaRepository<UserEntity, Long>{
 	
 	Optional<UserEntity> findOneByUsernameAndPassword(String username,String password);
+	Optional<UserEntity> findOneByGmail(String gmail);
+	
 }

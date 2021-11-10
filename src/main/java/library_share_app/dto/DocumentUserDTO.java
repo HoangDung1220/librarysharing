@@ -10,6 +10,12 @@ public class DocumentUserDTO {
 	private UserDTO user;
 	private boolean status;
 	
+	
+	
+	public DocumentUserDTO() {
+		super();
+	}
+
 	public DocumentUserDTO(Long id, Long id_document, DocumentDTO document, Long id_user, UserDTO user,
 			boolean status) {
 		super();

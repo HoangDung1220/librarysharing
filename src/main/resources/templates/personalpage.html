@@ -228,7 +228,7 @@
 								<img class="nav-user-photo" src="assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Hoang Dung
+									<div th:utext="${name}"> </div>
 								</span>
 
 								<i class="ace-icon fa fa-caret-down"></i>
@@ -236,7 +236,7 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
-									<a th:href="@{/general-home}">
+									<a th:href="@{/general-home(id=${id_user})}">
 										<i class="ace-icon fa fa-cog"></i>
 										Trang chung
 									</a>
@@ -333,25 +333,14 @@
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 				</div>
+				<div style="margin-left: 10px"><b>Liên hệ</b></div>
+				<br>
+				<ul th:each="user : ${users_active}" >
 				
-				
-				<ul>
-					<li >
-						<a href="index.html">
-							<i margin-left="50px" class="fa fa-envelope  bigger-160" aria-hidden="true"></i>
-							<i class="fa fa-user  bigger-160" aria-hidden="true"></i>
-							  
-						</a>
-
-						
+					<li style=" color : green; font-size: 20px">
+					<span style=" color : black; font-size: 13px" th:utext="${user.fullname}"></span>
 					</li>
-					
-
-				
-
-			
-					
-					
+										
 				</ul>
 				
 
