@@ -37,6 +37,9 @@ public class DocumentEntity {
 	@Column
 	private Date sharedDate;
 	
+	
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private CategoryEntity category;
@@ -44,9 +47,6 @@ public class DocumentEntity {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private UserEntity user;
-	
-	
-	
 	
 
 	public DocumentEntity() {
@@ -139,6 +139,8 @@ public class DocumentEntity {
 		this.user = user;
 	}
 	
+	
+
 	
 
 }

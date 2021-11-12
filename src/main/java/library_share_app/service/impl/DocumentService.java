@@ -27,9 +27,9 @@ import library_share_app.dto.DocumentUserDTO;
 import library_share_app.dto.UserDTO;
 import library_share_app.entity.DocumentEntity;
 import library_share_app.entity.DocumentUserEntity;
-import library_share_app.entity.UserEntity;
 import library_share_app.repository.DocumentRepository;
 import library_share_app.service.IDocumentService;
+import library_share_app.transfer.DocumentTransfer;
 
 @Service
 public class DocumentService implements IDocumentService{
@@ -57,6 +57,9 @@ public class DocumentService implements IDocumentService{
 	
 	@Autowired
 	private CategoryConvert categoryConvert;
+	
+	@Autowired
+	private DocumentTransfer documentTransfer;
 	
 	private DataInputStream din;
 	
@@ -200,7 +203,7 @@ public class DocumentService implements IDocumentService{
 
 	@Override
 	public void findAllPersonal() {
-		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current);
+		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current,true);
 		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
 		for (DocumentUserDTO doc : document_user) {
 			DocumentDTO dto = null;
@@ -211,12 +214,8 @@ public class DocumentService implements IDocumentService{
 			}
 		}
 		
-		Socket soc = null;
-		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
-			 if (item.getKey().getId()==SystemConstant.id_user_current) {
-				soc = item.getValue(); 
-			 }
-	       } 
+		Socket soc = documentTransfer.getSocketServer(SystemConstant.id_user_current);
+		
 		try {
 			dos = new DataOutputStream(soc.getOutputStream());
 			dos.writeInt(documents.size());
@@ -296,7 +295,7 @@ public class DocumentService implements IDocumentService{
 
 	@Override
 	public List<DocumentDTO> findAllShared() {
-		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current);
+		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current,true);
 		UserDTO user = userService.findOne(SystemConstant.id_user_current);
 		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
 		for (DocumentUserDTO doc : document_user) {
@@ -308,12 +307,7 @@ public class DocumentService implements IDocumentService{
 			}
 		}
 		
-		Socket soc = null;
-		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
-			 if (item.getKey().getId()==SystemConstant.id_user_current) {
-				soc = item.getValue(); 
-			 }
-	       } 
+		Socket soc = documentTransfer.getSocketServer(SystemConstant.id_user_current);
 		 
 			try {
 				dos = new DataOutputStream(soc.getOutputStream());
@@ -337,6 +331,84 @@ public class DocumentService implements IDocumentService{
 		 
 		 
 		 
+		return documents;
+	}
+
+
+	@Override
+	public List<DocumentDTO> findAllDeletePersonal() {
+		List<DocumentUserDTO> document_user = document_userService.findByUser(SystemConstant.id_user_current, false);
+		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
+		if (document_user!=null) {
+		for (DocumentUserDTO doc : document_user) {
+			DocumentDTO dto = null;
+			Optional<DocumentEntity> entity = repository.findById(doc.getId_document());
+			if (entity.isPresent()) {
+				dto = convert.toDTO(entity.get());
+				documents.add(dto);
+			}
+		}
+		}
+		Socket soc = documentTransfer.getSocketServer(SystemConstant.id_user_current);
+		
+		try {
+			dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeInt(documents.size());
+
+			for (DocumentDTO dto :documents) {
+				dos.writeUTF(dto.getDisplayFileName());
+				dos.writeUTF(dto.getDescription());
+				dos.writeUTF(dto.getFileName());
+				dos.writeUTF(String.valueOf(dto.getSharedDate()));
+				dos.writeUTF(dto.getSizeFile());
+				dos.writeBoolean(dto.isStatus());
+				dos.writeLong(dto.getId_Category());
+				dos.writeLong(dto.getId_user());
+				dos.writeLong(dto.getId());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		
+		}
+		return documents;
+	}
+	
+
+
+	@Override
+	public List<DocumentDTO> findAllFavouritePersonal() {
+		List<DocumentUserDTO> document_user = document_userService.findByUserFavourite(SystemConstant.id_user_current, true, true);
+		List<DocumentDTO> documents = new ArrayList<DocumentDTO>();
+		if (document_user!=null) {
+		for (DocumentUserDTO doc : document_user) {
+			DocumentDTO dto = null;
+			Optional<DocumentEntity> entity = repository.findById(doc.getId_document());
+			if (entity.isPresent()) {
+				dto = convert.toDTO(entity.get());
+				documents.add(dto);
+			}
+		}
+		}
+		Socket soc = documentTransfer.getSocketServer(SystemConstant.id_user_current);
+		
+		try {
+			dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeInt(documents.size());
+
+			for (DocumentDTO dto :documents) {
+				dos.writeUTF(dto.getDisplayFileName());
+				dos.writeUTF(dto.getDescription());
+				dos.writeUTF(dto.getFileName());
+				dos.writeUTF(String.valueOf(dto.getSharedDate()));
+				dos.writeUTF(dto.getSizeFile());
+				dos.writeBoolean(dto.isStatus());
+				dos.writeLong(dto.getId_Category());
+				dos.writeLong(dto.getId_user());
+				dos.writeLong(dto.getId());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return documents;
 	}
 	

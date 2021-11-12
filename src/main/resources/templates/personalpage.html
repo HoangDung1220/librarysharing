@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="assets/font-awesome/4.2.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="assets/fonts/fonts.googleapis.com.css" />
 		<link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		
 		<script src="assets/js/ace-extra.min.js"></script>
 
 		
@@ -279,7 +280,7 @@
 
 				<ul class="nav nav-list">
 					<li class="active">
-						<a href="index.html">
+						<a th:href="@{/personal-home(id=${id_user})}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Tài liệu của tôi </span>
 						</a>
@@ -294,30 +295,22 @@
 							<span class="menu-text"> Được chia sẻ với tôi </span>
 
 						</a>
-
-					
+												<b class="arrow"></b>
+						
 					</li>
+					
 						<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-clock-o" aria-hidden="true"></i>
-							<span class="menu-text"> Gần đây </span>
-
-						</a>
-
-					
-					</li>
-
-					<li class="">
-						<a href="#" class="dropdown-toggle">
+						<a th:href="@{/favourite(id=${id_user})}">
 							<i class="menu-icon fa fa-star-o" aria-hidden="true"></i>
 							<span class="menu-text"> Tài liệu quan trọng </span>
 
 						</a>
+												<b class="arrow"></b>
 						
 					</li>
 
 					<li class="">
-						<a href="gallery.html">
+						<a th:href="@{/bin-document(id=${id_user})}">
 							<i class="menu-icon fa fa-trash-o" aria-hidden="true"></i>
 							<span class="menu-text">Thùng rác  </span>
 						</a>
@@ -359,9 +352,9 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a th:href="@{/personal-home(id=${id_user})}">Trang chủ</a>
 							</li>
-							<li class="active">Dashboard</li>
+							<li class="active">Tài liệu của tôi</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -413,6 +406,8 @@
 																<span class="lbl"></span>
 															</label>
 														</th>
+														<th>id</th>
+														
 														<th>Chủ đề</th>
 														<th>Tài liệu</th>
 														
@@ -438,11 +433,11 @@
 																<span class="lbl"></span>
 															</label>
 														</td>
+														<td th:utext="${doc.id}"></td>
 
 														<td  th:utext="${doc.displayFileName}">
 															<a href="#"></a>
 														</td>
-														
 														<td ><a href="" th:utext="${doc.fileName}"></a></td>
 														
 														<td th:utext="${doc.description}"></td>
@@ -451,7 +446,7 @@
 														
 														<td th:utext="${doc.sizeFile}"></td>
 														
-														<td th:utext="${doc.SharedDate}"></td>
+														<td th:utext="${doc.time}"></td>
 
 														<td class="hidden-480">
 															<span class="label label-sm label-warning">Expiring</span>
@@ -460,57 +455,18 @@
 														<td th:utext="${doc.user.fullname}"></td>
 
 														<td>
-															<div class="hidden-sm hidden-xs action-buttons">
-																<a class="blue" href="#">
-																	<i class="ace-icon fa fa-search-plus bigger-130"></i>
-																</a>
+																
 
-																<a class="green" href="#">
-																	<i class="ace-icon fa fa-pencil bigger-130"></i>
-																</a>
-
-																<a class="red" href="#">
+														
+																<a th:href="@{/personal-home/deleteDocument(id=${id_user},id1=${doc.id})}" class="hidden-sm hidden-xs action-buttons deleteButton red">
 																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																</a>
-																<a class="black" href="#">
+																<a href="#" class="hidden-sm hidden-xs action-buttons black">
 																	<i class="fa fa-download bigger-130" aria-hidden="true"></i>
 																</a>
-															</div>
-
-															<div class="hidden-md hidden-lg">
-																<div class="inline pos-rel">
-																	<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-																		<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-																	</button>
-
-																	<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-																		<li>
-																			<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																				</span>
-																			</a>
-																		</li>
-
-																		<li>
-																			<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																				</span>
-																			</a>
-																			
-																		</li>
-																	</ul>
-																</div>
-															</div>
+																<a th:href="@{/personal-home/importanceDocument(id=${id_user},id1=${doc.id})}" class="hidden-sm hidden-xs action-buttons remarkButton yellow">
+																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true"></i>
+																</a>	
 														</td>
 														
 													</tr>
@@ -518,52 +474,57 @@
 													
 												</tbody>
 											</table>
-											 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-									  <div class="modal-dialog" role="document">
-										<div class="modal-content">
-										  <div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Upload Document</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
-										  </div>
-										  <div class="modal-body">
-										<!-- 	<form th:action="" th:object="" method="">
-											  <div class="form-group">
-												<label for="nation-name" class="col-form-label">Title:</label>
-												<input type="text" class="form-control" id="nationality" th:field="">
-											  </div>
-											  <div class="form-group">
-												<label for="capital_name" class="col-form-label">Content:</label>
-												<textarea class="form-control" id="capital" th:field="" ></textarea>
-											  </div>
-											  <div class="form-group">
-												<label for="code-name" class="col-form-label">Document:</label>
-												<input type="file" class="form-control" id="code" th:field="">
-											  </div>
-											 <div class="form-group">
-												<label for="code-name" class="col-form-label">Category:</label>
-												<select class="form-control" id="code" th:field="">
-												<option>Study</option>
-												</select>
-											  </div>
-												
-												 <div class="form-group">
-														   <button type="submit" class="btn btn-primary">Submit</button>
-														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-												</div>
-											</form>
-										  </div>
-										 
-										</div>
-									  </div>
-									</div>
-										</div>
-									</div>
+							  <!-- delete -->
+      
+								  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel2">Delete Data</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								      <form th:action="@{/personal-home/deleteDocument}" method="delete">
+								 	    Bạn có chắc sẽ xóa dữ liệu
+								       	        
+								       </form>
+								      </div>
+								      <div class="modal-footer">
+								      	       <a  class="btn btn-primary" id ="confirmDelete">Yes</a>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+								  </div>
 								</div>
-
-							-->
+								
+								<!-- remark -->
+								
+								  <div class="modal fade" id="remark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel3">Remark Data</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								      <form th:action="@{/personal-home/importanceDocument}" method="get">
+								       Bạn có chắc gắn vào thư mục có gắn dấu sao
+								       	        
+								       </form>
+								      </div>
+								      <div class="modal-footer">
+								      	       <a  class="btn btn-primary" id ="confirmRemark">Yes</a>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+											
+							
 
 							
 								</div><!-- /.row -->
@@ -629,6 +590,8 @@
 		<script src="assets/js/jquery.flot.min.js"></script>
 		<script src="assets/js/jquery.flot.pie.min.js"></script>
 		<script src="assets/js/jquery.flot.resize.min.js"></script>
+		<script src="js/document.js"></script>
+		
 
 		<!-- ace scripts -->
 		<script src="assets/js/ace-elements.min.js"></script>

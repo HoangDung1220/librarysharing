@@ -1,5 +1,6 @@
 package library_share_app.dto;
 
+import java.util.Date;
 
 public class DocumentUserDTO {
 	
@@ -9,6 +10,9 @@ public class DocumentUserDTO {
 	private Long id_user;
 	private UserDTO user;
 	private boolean status;
+	private Date dateDelete;
+	private boolean statusDelete;
+	private boolean statusFavourite;
 	
 	
 	
@@ -75,6 +79,31 @@ public class DocumentUserDTO {
 		this.status = status;
 	}
 
+	public Date getDateDelete() {
+		return dateDelete;
+	}
+
+	public void setDateDelete(Date dateDelete) {
+		this.dateDelete = dateDelete;
+	}
+
+	public boolean isStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(boolean statusDelete) {
+		this.statusDelete = statusDelete;
+	}
+
+	public boolean isStatusFavourite() {
+		return statusFavourite;
+	}
+
+	public void setStatusFavourite(boolean statusFavourite) {
+		this.statusFavourite = statusFavourite;
+	}
+
+	
 	
 
 }

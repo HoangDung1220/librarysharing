@@ -18,6 +18,8 @@ public class DocumentDTO {
 	private String emailShare;
 	private String time;
 	
+
+	
 	public DocumentDTO() {
 	}
 
@@ -167,8 +169,4 @@ public class DocumentDTO {
 	public void setUser(UserDTO user) {
 		this.user = user;
 	}
-	
-	
-
-
 }

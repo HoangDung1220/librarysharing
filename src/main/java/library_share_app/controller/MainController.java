@@ -83,7 +83,7 @@ public class MainController extends BaseController {
 			String username1=din.readUTF();
 			String password1=din.readUTF();
 			UserDTO user = new UserDTO(id, fullname, gmail, nameRoom, username1, password1, true);
-			if (user!=null) {
+			if (user!=null) {// khi login thanh cong thi ngươi dung dc luu voi nguoi dung va socket cua nguoi dung 
 				SystemConstant.list_user_active.put(user,SystemConstant.socket);
 				SystemConstant.list_socket_client.put(user,SystemConstant.socket_client);
 				model.addAttribute("id_user", user.getId());

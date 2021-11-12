@@ -1,5 +1,7 @@
 package library_share_app.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,15 @@ public class DocumentUserEntity {
 	
 	@Column
 	private boolean status;
+	
+	@Column
+	private Date dateDelete;
+	
+	@Column
+	private boolean statusDelete;
+	
+	@Column
+	private boolean statusFavourite;
 	
 	
 
@@ -73,6 +84,31 @@ public class DocumentUserEntity {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+
+	public Date getDateDelete() {
+		return dateDelete;
+	}
+
+	public void setDateDelete(Date dateDelete) {
+		this.dateDelete = dateDelete;
+	}
+
+	public boolean isStatusDelete() {
+		return statusDelete;
+	}
+
+	public void setStatusDelete(boolean statusDelete) {
+		this.statusDelete = statusDelete;
+	}
+
+	public boolean isStatusFavourite() {
+		return statusFavourite;
+	}
+
+	public void setStatusFavourite(boolean statusFavourite) {
+		this.statusFavourite = statusFavourite;
+	}
+	
 	
 	
 

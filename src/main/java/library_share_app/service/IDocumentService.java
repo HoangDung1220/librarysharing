@@ -12,4 +12,7 @@ public interface IDocumentService {
 	public DocumentDTO findOne(Long id);
 	public List<DocumentDTO> findAllByCategory(Long id_category);
 	public List<DocumentDTO> findAllShared();
+	public List<DocumentDTO> findAllDeletePersonal();
+	public List<DocumentDTO> findAllFavouritePersonal();
+
 }

@@ -29,6 +29,8 @@ public class DocumentTransfer {
 	private UserService userService;
 	
 	
+	
+	
 	public List<DocumentDTO> readDocumentClient() {
 		Socket soc = null;
 		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
@@ -69,5 +71,27 @@ public class DocumentTransfer {
 	}
 		return list;
 	}
+	
+	public Socket getSocketClient(Long id_client) {
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
+			 if (item.getKey().getId()==id_client) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		 return soc;
+	}
+	
+	public Socket getSocketServer(Long id_client) {
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
+			 if (item.getKey().getId()==SystemConstant.id_user_current) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		 return soc;
+	}
 
+	
+	
 }
