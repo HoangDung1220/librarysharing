@@ -39,6 +39,13 @@ public class DocumentUserEntity {
 	@Column
 	private boolean statusFavourite;
 	
+	@Column
+	private Long id_userShare;
+	
+	@Column
+	private Date dateShare;
+
+	
 	
 
 	public DocumentUserEntity() {
@@ -108,6 +115,24 @@ public class DocumentUserEntity {
 	public void setStatusFavourite(boolean statusFavourite) {
 		this.statusFavourite = statusFavourite;
 	}
+
+	public Long getId_userShare() {
+		return id_userShare;
+	}
+
+	public void setId_userShare(Long id_userShare) {
+		this.id_userShare = id_userShare;
+	}
+
+	public Date getDateShare() {
+		return dateShare;
+	}
+
+	public void setDateShare(Date dateShare) {
+		this.dateShare = dateShare;
+	}
+
+	
 	
 	
 	

@@ -16,7 +16,7 @@
 		
 	</head>
 	
-	<body class="no-skin">
+	<body class="no-skin" style="font-family: Sans-serif">
 	
 				<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
@@ -279,7 +279,7 @@
 			
 
 				<ul class="nav nav-list">
-					<li class="active">
+					<li class="">
 						<a th:href="@{/personal-home(id=${id_user})}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Tài liệu của tôi </span>
@@ -306,7 +306,7 @@
 						
 					</li>
 
-					<li class="">
+					<li class="active">
 						<a th:href="@{/bin-document(id=${id_user})}">
 							<i class="menu-icon fa fa-trash-o" aria-hidden="true"></i>
 							<span class="menu-text">Thùng rác  </span>
@@ -351,7 +351,7 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 								<a th:href="@{/personal-home(id=${id_user})}">Trang chủ</a>
 							</li>
-							<li class="active">Tài liệu quan trọng</li>
+							<li class="active">Thùng rác</li>
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">

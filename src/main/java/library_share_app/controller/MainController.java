@@ -46,6 +46,12 @@ public class MainController extends BaseController {
 		model.addAttribute("id_user", "0");
 		return "mainPage";
 	}
+	
+	@GetMapping("/main-home-client")
+	public String getHome_client(Model model) {
+		model.addAttribute("name_user", "");
+		return "mainPage_client";
+	}
 
 	@GetMapping("/login")
 	public String login() {
@@ -83,11 +89,12 @@ public class MainController extends BaseController {
 			String username1=din.readUTF();
 			String password1=din.readUTF();
 			UserDTO user = new UserDTO(id, fullname, gmail, nameRoom, username1, password1, true);
-			if (user!=null) {// khi login thanh cong thi ngươi dung dc luu voi nguoi dung va socket cua nguoi dung 
+			if (user!=null) {
 				SystemConstant.list_user_active.put(user,SystemConstant.socket);
 				SystemConstant.list_socket_client.put(user,SystemConstant.socket_client);
 				model.addAttribute("id_user", user.getId());
-				return "mainPage";
+				model.addAttribute("name_user", user.getFullname());
+				return "mainPage_client";
 			} 
 		} catch (IOException e) {
 			e.printStackTrace();

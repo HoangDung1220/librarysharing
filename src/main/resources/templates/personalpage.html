@@ -6,6 +6,10 @@
 		<title>Personal-Page</title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="other/chat.css">
+		<link rel="stylesheet" href="other/search.css" />
+		
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="assets/font-awesome/4.2.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="assets/fonts/fonts.googleapis.com.css" />
@@ -16,7 +20,7 @@
 		
 	</head>
 	
-	<body class="no-skin">
+	<body class="no-skin" style="font-family: Sans-serif">
 	
 				<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
@@ -235,7 +239,7 @@
 								<i class="ace-icon fa fa-caret-down"></i>
 							</a>
 
-							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close" >
 								<li>
 									<a th:href="@{/general-home(id=${id_user})}">
 										<i class="ace-icon fa fa-cog"></i>
@@ -278,7 +282,7 @@
 
 			
 
-				<ul class="nav nav-list">
+				<ul class="nav nav-list" style="font-family: Sans-serif">
 					<li class="active">
 						<a th:href="@{/personal-home(id=${id_user})}">
 							<i class="menu-icon fa fa-tachometer"></i>
@@ -331,11 +335,24 @@
 				<ul th:each="user : ${users_active}" >
 				
 					<li style=" color : green; font-size: 20px">
-					<span style=" color : black; font-size: 13px" th:utext="${user.fullname}"></span>
+					<!--					<span style=" color : black; font-size: 13px" th:utext="${user.fullname}"></span>
+					  -->
+					<button class="open-button1" onclick="openForm()" th:utext="${user.fullname}" style="border:none;font-size:13px"></button>
+					
 					</li>
 										
 				</ul>
 				
+				<div class="chat-popup" id="myForm">
+				  <form action="/action_page.php" class="form-container">
+				
+				    <textarea placeholder="Type message.." name="msg" required></textarea>
+				    <input type="text" name="message" size="35"><br>
+				    <button type="submit" class="btn">Send</button>
+				    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+				  </form>
+				</div>
+								
 
 				<script type="text/javascript">
 					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
@@ -357,35 +374,32 @@
 							<li class="active">Tài liệu của tôi</li>
 						</ul><!-- /.breadcrumb -->
 
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" height ="1000px" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div>
+					
 						<!-- /.nav-search -->
 											</div>
 
 					<div class="page-content">
-						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
-
-						<!-- /.ace-settings-box -->
-						</div><!-- /.ace-settings-container -->
-					
+						
 
 								<!-- PAGE CONTENT BEGINS -->
 										<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">Document</h3>
-
-										<div class="clearfix">
-											<div class="pull-right tableTools-container"></div>
-										</div>
-										
+											<form th:action="@{/search_user(id=${id_user})}" method="post">
+												<div class="page-content">
+													<div class="ace-settings-container" id="ace-settings-container">
+														<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+															<i class="ace-icon fa fa-cog bigger-130"></i>
+														</div>
+													</div>
+												 <div class="row height d-flex justify-content-center align-items-center">
+											        <div class="col-md-8" >
+											            <div class="search"> <i class="fa fa-search"></i> 
+											            <input type="text" class="form-control" name="character"> 
+											            <button class="btn btn-primary">Search</button> 
+											            </div>
+											        </div>
+											    </div>
+											    </div>
+											    </form>
 
 										<!-- div.table-responsive -->
 
@@ -397,7 +411,7 @@
 										  </button>
 										</div> 
 										
-											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+											<table id="dynamic-table" class="table table-striped table-bordered table-hover" style="font-family: Sans-serif">
 												<thead>
 													<tr>
 														<th class="center">
@@ -419,7 +433,7 @@
 															<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
 															Ngày chia sẻ
 														</th>
-														<th class="hidden-480">Trạng thái</th>
+													
 														<th>Người chia sẻ</th>
 														<th></th>
 													</tr>
@@ -448,10 +462,7 @@
 														
 														<td th:utext="${doc.time}"></td>
 
-														<td class="hidden-480">
-															<span class="label label-sm label-warning">Expiring</span>
-														</td>
-														
+													
 														<td th:utext="${doc.user.fullname}"></td>
 
 														<td>
@@ -464,9 +475,20 @@
 																<a href="#" class="hidden-sm hidden-xs action-buttons black">
 																	<i class="fa fa-download bigger-130" aria-hidden="true"></i>
 																</a>
-																<a th:href="@{/personal-home/importanceDocument(id=${id_user},id1=${doc.id})}" class="hidden-sm hidden-xs action-buttons remarkButton yellow">
-																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true"></i>
+																
+																<a th:href="@{/personal-home/importanceDocument(id=${id_user},id1=${doc.id})}"  th:unless="${doc.statusImportanceWithUser==true}" 
+																class="hidden-sm hidden-xs action-buttons remarkButton yellow">
+																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true" style="color:#D8BFD8"></i>
 																</a>	
+																<a th:href="@{/personal-home/unimportanceDocument(id=${id_user},id1=${doc.id})}" th:if="${doc.statusImportanceWithUser==true}"
+																class="hidden-sm hidden-xs action-buttons unremarkButton yellow">
+																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true" style="color: #FFD700"></i>
+																</a>
+																<a th:href="@{/personal-home/shareDocument(id=${id_user},id1=${doc.id})}" class="hidden-sm hidden-xs action-buttons shareButton" data-toggle="modal" data-target="#share">
+											  					<i class="fa fa-share-alt bigger-130" aria-hidden="true" style="color: #228B22"></i>
+																</a>
+																
+																
 														</td>
 														
 													</tr>
@@ -479,13 +501,13 @@
 								  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
 								  <div class="modal-dialog" role="document">
 								    <div class="modal-content">
-								      <div class="modal-header">
+								      <div class="modal-header" style="background: #87CEEB">
 								        <h5 class="modal-title" id="exampleModalLabel2">Delete Data</h5>
 								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								          <span aria-hidden="true">&times;</span>
 								        </button>
 								      </div>
-								      <div class="modal-body">
+								      <div class="modal-body" style="font-family: Sans-serif">
 								      <form th:action="@{/personal-home/deleteDocument}" method="delete">
 								 	    Bạn có chắc sẽ xóa dữ liệu
 								       	        
@@ -504,15 +526,15 @@
 								  <div class="modal fade" id="remark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
 								  <div class="modal-dialog" role="document">
 								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel3">Remark Data</h5>
+								      <div class="modal-header" style="background: #87CEEB">
+								        <h5 class="modal-title" id="exampleModalLabel3"></h5>
 								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								          <span aria-hidden="true">&times;</span>
 								        </button>
 								      </div>
-								      <div class="modal-body">
+								      <div class="modal-body" style="font-family: Sans-serif">
 								      <form th:action="@{/personal-home/importanceDocument}" method="get">
-								       Bạn có chắc gắn vào thư mục có gắn dấu sao
+								       <span>Bạn có chắc gắn vào thư mục có gắn dấu sao</span>
 								       	        
 								       </form>
 								      </div>
@@ -523,6 +545,106 @@
 								    </div>
 								  </div>
 								</div>
+								
+								<!-- unremarked -->
+								 <div class="modal fade" id="unremark" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header" style="background: #87CEEB">
+								        <h5 class="modal-title" id="exampleModalLabel4"></h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body" style="font-family: Sans-serif">
+								      <form th:action="@{/personal-home/unimportanceDocument}" method="get">
+								       Bạn có chắc xóa khỏi thư mục có gắn dấu sao     
+								       </form>
+								      </div>
+								      <div class="modal-footer">
+								      	       <a class="btn btn-primary" id ="unconfirmRemark">Yes</a>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								
+							<!-- share -->
+								 <div class="modal fade" id="shareModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header" style="background: #87CEEB">
+											<h5 class="modal-title" id="exampleModalLabel4" style="font-size: 20px; color: black; ">Share </h5>
+											
+										  </div>
+								     <div class="modal-body">
+											<form  method="post" id ="share">
+											<div class="form-group" style="font-family: Sans-serif">
+												<label for="file-name" class="col-form-label">Email</label>
+												<input type="text" class="form-control" id="email" name="email" placeholder="Thêm email để chia sẻ tài liệu này">
+											</div>
+											 <div class="form-group">
+														   <button type="submit" class="btn btn-primary">Submit</button>
+														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+												</div>
+											 </form>
+									</div>	  
+											 <!-- 
+											   <div class="modal-footer">
+								      	        <a class="btn btn-primary" id ="share">Share</a>
+								   			     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								    		  </div>
+											  -->
+											
+										  
+										 
+										</div>
+									  </div>
+									</div> 
+						<!-- upload document -->
+								  	 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header" style="background: #87CEEB">
+											<h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px; color: black; ">Upload document</h5>
+											
+										  </div>
+								     <div class="modal-body">
+											<form th:action="@{/document_user/addDocument(id=${id_user})}" th:object="${document}" method="POST">
+											<div class="form-group">
+												<label for="file-name" class="col-form-label">File name:</label>
+												<input type="text" class="form-control" id="displayFileName" th:field="*{displayFileName}">
+											</div>
+											  
+											  <div class="form-group">
+												<label for="description-name" class="col-form-label">Description:</label>
+												<input type="text" class="form-control" id="description" th:field="*{description}">
+											  </div>
+											  
+											    <div class="form-group">
+												<label for="file-link-name" class="col-form-label">Attachment file:</label>
+												<input type="file" class="form-control" id="fileName" th:field="*{fileName}">
+											   </div>
+											   
+											  <div class="form-group">
+											  <label for="category-name" class="col-form-label">Category :</label>
+											  <select th:field="*{id_Category}" class="form-control" id = "category">
+												<option th:each ="cate : ${categories}" 
+												th:value ="${cate.id}"
+												th:utext ="${cate.name}"
+												/>		  
+											 </select>
+											  </div>
+											  <div class="form-group">
+														   <button type="submit" class="btn btn-primary">Submit</button>
+														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+												</div>
+											</form>
+										  </div>
+										 
+										</div>
+									  </div>
+									</div> 
 											
 							
 
@@ -583,6 +705,7 @@
 		<!--[if lte IE 8]>
 		  <script src="assets/js/excanvas.min.js"></script>
 		<![endif]-->
+		<script src="js/chat.js"></script>
 		<script src="assets/js/jquery-ui.custom.min.js"></script>
 		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="assets/js/jquery.easypiechart.min.js"></script>

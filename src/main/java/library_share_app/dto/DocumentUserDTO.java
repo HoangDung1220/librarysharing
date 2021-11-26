@@ -8,11 +8,14 @@ public class DocumentUserDTO {
 	private Long id_document;
 	private DocumentDTO document;
 	private Long id_user;
+	private Long id_userShare;
 	private UserDTO user;
 	private boolean status;
 	private Date dateDelete;
 	private boolean statusDelete;
 	private boolean statusFavourite;
+	private UserDTO userShare;
+	private Date dateShare;
 	
 	
 	
@@ -103,6 +106,31 @@ public class DocumentUserDTO {
 		this.statusFavourite = statusFavourite;
 	}
 
+	public UserDTO getUserShare() {
+		return userShare;
+	}
+
+	public void setUserShare(UserDTO userShare) {
+		this.userShare = userShare;
+	}
+
+	public Long getId_userShare() {
+		return id_userShare;
+	}
+
+	public void setId_userShare(Long id_userShare) {
+		this.id_userShare = id_userShare;
+	}
+
+	public Date getDateShare() {
+		return dateShare;
+	}
+
+	public void setDateShare(Date dateShare) {
+		this.dateShare = dateShare;
+	}
+
+	
 	
 	
 

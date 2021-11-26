@@ -16,7 +16,7 @@
 		
 	</head>
 	
-	<body class="no-skin">
+	<body class="no-skin" style="font-family: Sans-serif">
 	
 				<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
@@ -279,7 +279,7 @@
 			
 
 				<ul class="nav nav-list">
-					<li class="active">
+					<li class="">
 						<a th:href="@{/personal-home(id=${id_user})}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Tài liệu của tôi </span>
@@ -299,7 +299,7 @@
 					
 					
 
-					<li class="">
+					<li class="active">
 						<a th:href="@{/favourite(id=${id_user})}" >
 							<i class="menu-icon fa fa-star-o" aria-hidden="true"></i>
 							<span class="menu-text"> Tài liệu quan trọng </span>
@@ -441,7 +441,7 @@
 														<td>
 															
 																<a th:href="@{/unremarkDocument(id=${id_user},id1=${doc.id})}" class="hidden-sm hidden-xs action-buttons yellow">
-																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true"></i>
+																	<i class="menu-icon fa fa-star-o bigger-130" aria-hidden="true" style="color: #FFD700 "></i>
 																</a>	
 														</td>
 														

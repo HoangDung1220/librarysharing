@@ -14,6 +14,7 @@ import library_share_app.constant.SystemConstant;
 import library_share_app.convert.DocumentConvert;
 import library_share_app.convert.DocumentUserConvert;
 import library_share_app.convert.UserConvert;
+import library_share_app.dto.DocumentDTO;
 import library_share_app.dto.DocumentUserDTO;
 import library_share_app.dto.UserDTO;
 import library_share_app.entity.DocumentEntity;
@@ -49,6 +50,8 @@ public class DocumentUserService implements IDocumentUserService{
 
 	@Override
 	public DocumentUserDTO save(DocumentUserDTO document_user) {
+		document_user.setStatusDelete(true);
+		document_user.setStatusFavourite(false);
 		DocumentUserEntity entity = repository.save(convert.toEntity(document_user));
 		return convert.toDTO(entity);
 	}
@@ -173,6 +176,38 @@ public class DocumentUserService implements IDocumentUserService{
 		}
 		
 	}
+
+
+	@Override
+	public void shareDocument() {
+		Socket socket = documentTranfer.getSocketServer(SystemConstant.id_user_current);
+		try {
+			DataInputStream din = new DataInputStream(socket.getInputStream());
+			Long id_user = din.readLong();
+			Long id_document = din.readLong();
+			String email  = din.readUTF();
+			System.out.println(id_user+" "+id_document+" "+email);
+			DocumentDTO document = documentService.findOne(id_document);
+			String emails[] = email.split(";");
+			for (String st : emails) {
+				UserDTO user = userService.findByGmail(st);
+				if (user != null) {
+					DocumentUserEntity entity= new DocumentUserEntity();
+					entity.setDocument(documentConvert.toEntity(document));
+					entity.setStatus(true);
+					entity.setUser(userConvert.toEntity(user));
+					entity.setId_userShare(id_user);
+					entity.setStatusDelete(true);
+					entity.setDateShare(new Timestamp(System.currentTimeMillis()));
+					repository.save(entity);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 
 
 	

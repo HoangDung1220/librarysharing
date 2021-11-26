@@ -17,6 +17,7 @@ public class DocumentDTO {
 	private UserDTO user;
 	private String emailShare;
 	private String time;
+	private boolean statusImportanceWithUser;
 	
 
 	
@@ -168,5 +169,15 @@ public class DocumentDTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+
+	public boolean isStatusImportanceWithUser() {
+		return statusImportanceWithUser;
+	}
+
+
+	public void setStatusImportanceWithUser(boolean statusImportanceWithUser) {
+		this.statusImportanceWithUser = statusImportanceWithUser;
 	}
 }

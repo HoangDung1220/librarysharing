@@ -3,8 +3,10 @@ package library_share_app.service.impl;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -30,6 +32,7 @@ public class UserService implements IUserService{
 	@Override
 	public void findOneByUsernameAndPassword() {
 		DataInputStream din;
+		
 		try {
 			din = new DataInputStream(SystemConstant.socket.getInputStream());
 			DataOutputStream dos = new DataOutputStream(SystemConstant.socket.getOutputStream());
@@ -51,8 +54,14 @@ public class UserService implements IUserService{
 	}
 	
 	public void getUserActive() {
+		Socket soc=null;
+		for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_user_active.entrySet()) {
+			 if (item.getKey().getId()==SystemConstant.id_user_current) {
+				soc = item.getValue(); 
+			 }
+	       } 
 		try {
-			DataOutputStream dos = new DataOutputStream(SystemConstant.socket.getOutputStream());
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 			dos.writeInt(SystemConstant.list_user_active.size());
 			List<UserDTO> users = new ArrayList<UserDTO>();
 			 Set<UserDTO> keySet = SystemConstant.list_user_active.keySet();

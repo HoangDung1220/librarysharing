@@ -36,6 +36,7 @@ public class UserEntity {
 	@Column
 	private boolean status;
 	
+	
 	@OneToMany(mappedBy="user")
 	private List<DocumentEntity> documents = new ArrayList<DocumentEntity>();
 	

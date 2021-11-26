@@ -7,6 +7,7 @@ import library_share_app.dto.DocumentDTO;
 public interface IDocumentService {
 	
 	public DocumentDTO save();
+	public void shareNewDocument();
 	public void findAll();
 	public void findAllPersonal();
 	public DocumentDTO findOne(Long id);
@@ -14,5 +15,8 @@ public interface IDocumentService {
 	public List<DocumentDTO> findAllShared();
 	public List<DocumentDTO> findAllDeletePersonal();
 	public List<DocumentDTO> findAllFavouritePersonal();
+	public List<DocumentDTO> findByStatusAndDisplayFileNameLike(boolean status,String displayFileName);
+	public List<DocumentDTO> findByIdAndDisplayFileNameContaining(Long id);
+
 
 }

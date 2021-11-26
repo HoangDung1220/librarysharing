@@ -277,8 +277,8 @@
 
 			
 
-				<ul class="nav nav-list">
-					<li class="active">
+				<ul class="nav nav-list" style="font-family: Sans-serif">
+					<li class="">
 						<a th:href="@{/personal-home(id=${id_user})}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Tài liệu của tôi </span>
@@ -288,7 +288,7 @@
 					</li>
 
 
-					<li class="">
+					<li class="active">
 						<a th:href="@{/sharing-document(id=${id_user})}" >
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> Được chia sẻ với tôi </span>
@@ -340,7 +340,7 @@
 				</script>
 			</div>
 
-			<div class="main-content">
+			<div class="main-content" style="font-family: Sans-serif">
 				<div class="main-content-inner">
 					<div class="breadcrumbs" id="breadcrumbs">
 						<script type="text/javascript">
@@ -366,10 +366,11 @@
 						<!-- /.nav-search -->
 											</div>
 
+			<div class="col-xs-50">
 	
 			<div id="timeline-2" >
 									<div class="row">
-										<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+										<div class="col-xs-50 col-sm-10 col-sm-offset-2">
 											<div th:each="doc : ${documents}">
 											<div class="timeline-container timeline-style2">
 												
@@ -384,15 +385,20 @@
 														<div class="widget-box transparent">
 															<div class="widget-body">
 																<div class="widget-main no-padding">
-																	<span class="bigger-110">
+																	<span class="bigger-110" style="color: #006400 ">
 																		<span th:utext="${doc.user.fullname}"></span>
-																		share document
+																		share document with me
 																	</span>
-
+	
+																	<br>
+																		<span class="bigger-110" >
+																		Tên tài liệu : <span th:utext="${doc.displayFileName}"></span>
+																		
+																	</span>
 																	
 																	<br>
 																		<span class="bigger-110">
-																		<span th:utext="${doc.description}"></span>
+																		Mô tả : <span th:utext="${doc.description}"></span>
 																		
 																	</span>
 																	<br />
@@ -412,7 +418,7 @@
 									</div>
 								</div>
 	</div>
-	
+	</div>
 	
 
 			<div class="footer">

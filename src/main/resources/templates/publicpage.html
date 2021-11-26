@@ -10,12 +10,14 @@
 		<link rel="stylesheet" href="assets/font-awesome/4.2.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" href="assets/fonts/fonts.googleapis.com.css" />
 		<link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		<link rel="stylesheet" href="other/search.css" />
+		
 		<script src="assets/js/ace-extra.min.js"></script>
 
 		
 	</head>
 	
-	<body class="no-skin">
+	<body class="no-skin" style="font-family: Sans-serif">
 		<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
@@ -170,40 +172,39 @@
 							<li class="active">Tài liệu</li>
 						</ul><!-- /.breadcrumb -->
 
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" height ="1000px" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- /.nav-search -->
+						
 					</div>
-
+					
+										
+					<div class="col-xs-12">
+														
+					<form th:action="@{/search(id=${id_user})}" method="post">
 					<div class="page-content">
 						<div class="ace-settings-container" id="ace-settings-container">
 							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
 								<i class="ace-icon fa fa-cog bigger-130"></i>
 							</div>
-					</div>
-
-								<div class="col-xs-12">
-										<h3 class="header smaller lighter blue">Tài liệu</h3>
-
-										<div class="clearfix">
-											<div class="pull-right tableTools-container"></div>
-										</div>
-										
-
-										<!-- div.table-responsive -->
-
-										<!-- div.dataTables_borderWrap -->
-										
+						</div>
+					 <div class="row height d-flex justify-content-center align-items-center">
+				        <div class="col-md-8" >
+				            <div class="search"> <i class="fa fa-search"></i> 
+				            <input type="text" class="form-control" name="character"> 
+				            <button class="btn btn-primary">Search</button> 
+				            </div>
+				        </div>
+				    </div>
+				    </div>
+				    </form>
+					
 										<div>
 										  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
 											+ Upload
 										  </button>
-										</div> 
+										
+										  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#share">
+											+ Share
+										  </button>
+										</div>  
 										
 											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
 												<thead>
@@ -310,14 +311,13 @@
 													
 												</tbody>
 											</table>
+											<!-- upload document -->
 								  	 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 									  <div class="modal-dialog" role="document">
 										<div class="modal-content">
-										  <div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLabel">Upload Document</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											  <span aria-hidden="true">&times;</span>
-											</button>
+										  <div class="modal-header" style="background: #87CEEB">
+											<h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px; color: black; ">Upload document</h5>
+											
 										  </div>
 								     <div class="modal-body">
 											<form th:action="@{/document/addDocument(id=${id_user})}" th:object="${document}" method="POST">
@@ -345,18 +345,55 @@
 												/>		  
 											 </select>
 											  </div>
+											  <div class="form-group">
+														   <button type="submit" class="btn btn-primary">Submit</button>
+														   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+												</div>
+											</form>
+										  </div>
+										 
+										</div>
+									  </div>
+									</div> 
+									<!-- share -->
+									<div class="modal fade" id="share" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									  <div class="modal-dialog" role="document">
+										<div class="modal-content">
+										  <div class="modal-header" style="background: #87CEEB">
+											<h5 class="modal-title" id="exampleModalLabel" style="font-size: 20px; color: black; ">Chia sẻ tài liệu
+											</h5>
+											
+										  </div>
+								     <div class="modal-body">
+											<form th:action="@{/document/shareDocument(id=${id_user})}" th:object="${document}" method="POST">
+											<div class="form-group">
+												<label for="file-name" class="col-form-label">File name:</label>
+												<input type="text" class="form-control" id="displayFileName" th:field="*{displayFileName}">
+											</div>
 											  
 											  <div class="form-group">
-											  <label for="share-for-name" class="col-form-label">Share for:</label>
-											  <select th:field="*{status}" class="form-control" id = "status">
-   												 <option value="true">Share all person</option>
-  												 <option value="false">Share private person</option>
-											 </select>
+												<label for="description-name" class="col-form-label">Description:</label>
+												<input type="text" class="form-control" id="description" th:field="*{description}">
 											  </div>
 											  
+											    <div class="form-group">
+												<label for="file-link-name" class="col-form-label">Attachment file:</label>
+												<input type="file" class="form-control" id="fileName" th:field="*{fileName}">
+											   </div>
+											   
+											  <div class="form-group">
+											  <label for="category-name" class="col-form-label">Category :</label>
+											  <select th:field="*{id_Category}" class="form-control" id = "category">
+												<option th:each ="cate : ${categories}" 
+												th:value ="${cate.id}"
+												th:utext ="${cate.name}"
+												/>		  
+											 </select>
+											  </div>
 											   <div class="form-group">
 											  <label for="email-name" class="col-form-label">Email Share:</label>
-													<input type="text" class="form-control" id="emailShare" th:field="*{emailShare}">
+													<input type="text" class="form-control" id="emailShare" th:field="*{emailShare}" 
+													placeholder="hoangdung@gmail.com;vananh@gmail.com">
 											  </div>
 											
 											  
