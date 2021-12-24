@@ -17,6 +17,7 @@ public interface IDocumentService {
 	public List<DocumentDTO> findAllFavouritePersonal();
 	public List<DocumentDTO> findByStatusAndDisplayFileNameLike(boolean status,String displayFileName);
 	public List<DocumentDTO> findByIdAndDisplayFileNameContaining(Long id);
+	public void download();
 
 
 }

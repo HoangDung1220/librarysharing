@@ -13,6 +13,7 @@ public interface IDocumentUserService {
 	public void importanceDocumentUser();
 	public void unremarkDocument();
 	public void shareDocument();
+	public void delete();
 
 
 

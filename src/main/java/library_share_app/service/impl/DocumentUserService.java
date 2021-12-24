@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,6 +206,21 @@ public class DocumentUserService implements IDocumentUserService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public void delete() {
+		Date date = new Date();
+		date.setMonth(date.getMonth()-1);
+		List<DocumentUserDTO> listdto = new ArrayList<DocumentUserDTO>();
+		List<DocumentUserEntity> list = repository.findByDateDelete(date);
+		for (DocumentUserEntity en:list) {
+			repository.delete(en);
+		}
+		
+		
+		
 	}
 
 

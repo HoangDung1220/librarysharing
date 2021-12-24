@@ -10,6 +10,7 @@ import library_share_app.dto.UserDTO;
 
 public class SystemConstant {
 	public static final String download ="D:\\StoringFile\\download\\";
+	public static final String download_server ="D:\\StoringFile\\downloadserver\\";
 	public static final String upload ="D:\\StoringFile\\upload\\";
 	public static  ServerSocket server ;
 	public static List<Socket> sockets =  new ArrayList<Socket>();

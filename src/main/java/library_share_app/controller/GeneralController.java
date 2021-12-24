@@ -1,10 +1,12 @@
 package library_share_app.controller;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -244,6 +246,62 @@ public class GeneralController extends BaseController{
 		model.addObject("id_user", id);
 		return model;
 		
+	}
+	
+	@GetMapping("/document/download")
+	public String download(@RequestParam("id") String id,@RequestParam("file-name") String filename) {
+		System.out.println(filename);
+		
+		SystemConstant.id_user_current = Long.parseLong(id);
+		
+		Socket soc = null;
+		 for (Map.Entry<UserDTO, Socket> item : SystemConstant.list_socket_client.entrySet()) {
+			 if (item.getKey().getId()==Long.parseLong(id)) {
+				soc = item.getValue(); 
+			 }
+	       } 
+		
+		try {
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeUTF(filename);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		service.download();
+		
+		try {
+			DataInputStream din = new DataInputStream(soc.getInputStream());
+
+			long fileSize = din.readLong();
+			fileReceive(fileSize,filename,din);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		StringBuilder st = new StringBuilder("redirect:/general-home?id=");
+		st.append(id);
+		return st.toString();
+			
+	}
+	
+	public void fileReceive(long fileSize,String file_name,DataInputStream din) throws IOException {
+		StringBuilder source = new StringBuilder();
+		source.append(SystemConstant.download_server+file_name);
+		File f = new File(source.toString());
+		BufferedOutputStream bos;
+		try {
+			bos = new BufferedOutputStream(new FileOutputStream(f));
+			
+			for (int i = 0; i < fileSize; i++) {
+				bos.write(din.read());
+				bos.flush();
+			}
+			bos.close();
+		} catch (IOException e) {
+		}
 	}
 	
 	

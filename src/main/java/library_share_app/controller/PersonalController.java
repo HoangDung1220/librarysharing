@@ -1,12 +1,16 @@
 package library_share_app.controller;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -307,6 +311,57 @@ public class PersonalController extends BaseController{
 		String name = userService.findOne(Long.parseLong(id)).getFullname();
 		model.addObject("name",name);
 		return model;
+	}
+	
+	@GetMapping("/download")
+	public String download(@RequestParam("id") String id,@RequestParam("file-name") String filename) {
+		System.out.println(filename);
+		
+		SystemConstant.id_user_current=Long.parseLong(id);
+		Socket soc = documentTranfer.getSocketClient(Long.parseLong(id));
+		
+		
+		try {
+			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+			dos.writeUTF(filename);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		documentService.download();
+		
+		try {
+			DataInputStream din = new DataInputStream(soc.getInputStream());
+
+			long fileSize = din.readLong();
+			fileReceive(fileSize,filename,din);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		StringBuilder st = new StringBuilder("redirect:/personal-home?id=");
+		st.append(id);
+		return st.toString();
+			
+	}
+	
+	public void fileReceive(long fileSize,String file_name,DataInputStream din) throws IOException {
+		StringBuilder source = new StringBuilder();
+		source.append(SystemConstant.download_server+file_name);
+		File f = new File(source.toString());
+		BufferedOutputStream bos;
+		try {
+			bos = new BufferedOutputStream(new FileOutputStream(f));
+			
+			for (int i = 0; i < fileSize; i++) {
+				bos.write(din.read());
+				bos.flush();
+			}
+			bos.close();
+		} catch (IOException e) {
+		}
 	}
 	
 	

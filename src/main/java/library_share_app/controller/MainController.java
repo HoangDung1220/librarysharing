@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import library_share_app.constant.SystemConstant;
 import library_share_app.dto.UserDTO;
+import library_share_app.service.impl.DocumentUserService;
 import library_share_app.service.impl.UserService;
 
 @Controller
@@ -24,6 +25,9 @@ public class MainController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DocumentUserService documentUserService;
 	
 	
 	@GetMapping("/main-home")
@@ -43,6 +47,7 @@ public class MainController extends BaseController {
 			}				
 		};
 		t.start();
+		documentUserService.delete();
 		model.addAttribute("id_user", "0");
 		return "mainPage";
 	}

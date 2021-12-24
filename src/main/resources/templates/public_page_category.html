@@ -132,16 +132,6 @@
 					</li>
 
 				
-					<li class="">
-						<a href="gallery.html">
-							<i class="menu-icon fa fa-picture-o"></i>
-							<span class="menu-text"> Người dùng </span>
-						</a>
-
-						<b class="arrow"></b>
-					</li>
-
-				
 
 					
 					
@@ -174,14 +164,7 @@
 							
 						</ul><!-- /.breadcrumb -->
 
-						<div class="nav-search" id="nav-search">
-							<form class="form-search">
-								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" height ="1000px" />
-									<i class="ace-icon fa fa-search nav-search-icon"></i>
-								</span>
-							</form>
-						</div><!-- /.nav-search -->
+					
 					</div>
 
 					<div class="page-content">
@@ -221,10 +204,7 @@
 														<th>Thể loại</th>
 														<th>Kích thước</th>
 															
-														<th>
-															<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-															Ngày chia sẻ
-														</th>
+														
 														<th>Người chia sẻ</th>
 														<th></th>
 													</tr>
@@ -250,20 +230,14 @@
 														<td class="hidden-480" th:utext="${doc.category.name}"></td>
 														
 														<td th:utext="${doc.sizeFile}"></td>
-														
-														<td th:utext="${doc.SharedDate}"></td>
-
-												
-														
+													
 														<td th:utext="${doc.user.fullname}"></td>
 
 														<td>
 															<div class="hidden-sm hidden-xs action-buttons">
 																
-																<a class="red" href="#">
-																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
-																</a>
-																<a class="black" href="#">
+																
+																<a class="black" th:href="@{/document/download(id=${id_user},file-name=${doc.fileName})}" >
 																	<i class="fa fa-download bigger-130" aria-hidden="true"></i>
 																</a>
 															</div>

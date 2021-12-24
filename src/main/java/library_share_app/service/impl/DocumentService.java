@@ -1,9 +1,11 @@
 package library_share_app.service.impl;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -576,6 +578,36 @@ public class DocumentService implements IDocumentService{
 		DocumentDTO output = convert.toDTO(repository.save(convert.toEntity(document)));
 		SaveDocumentUserSelf(SystemConstant.id_user_current,output);
 		SaveDocumentUser(email, output);
+		
+	}
+
+
+	@Override
+	public void download() {
+		Socket soc = documentTransfer.getSocketServer(SystemConstant.id_user_current);
+		 try {
+			 din = new DataInputStream(soc.getInputStream());
+			 dos = new DataOutputStream(soc.getOutputStream());
+
+			 String filename = din.readUTF();
+			 StringBuilder sourcefile = new StringBuilder();
+				sourcefile.append(SystemConstant.download+"\\"+filename);
+				File fileSource = new File(sourcefile.toString());
+				BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileSource));
+				dos.writeLong(fileSource.length());
+				dos.flush();
+					int data;
+					while ((data = bis.read()) != -1) {
+						dos.write(data);
+						dos.flush();
+					}
+					bis.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+
 		
 	}
 	
